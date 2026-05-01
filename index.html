@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RetailBrain - Background Video</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include hls.js for m3u8 playback -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        /* CSS to make the video cover the entire background */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1; /* Push behind other content */
+        }
+        
+        .video-container video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        /* Overlay text content */
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="text-white font-sans antialiased m-0 p-0">
+    
+    <!-- Background Video container -->
+    <div class="video-container">
+        <!-- Must be muted to autoplay consistently across modern browsers -->
+        <video id="bg-video" autoplay loop muted playsinline></video>
+    </div>
+
+    <!-- UI Overlay Content -->
+    <div class="content flex flex-col items-center justify-center min-h-screen p-4 text-center bg-black/40">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight drop-shadow-lg">RetailBrain AI</h1>
+        <p class="text-xl md:text-2xl text-gray-100 mb-10 max-w-2xl drop-shadow-md">
+            Intelligent retail analytics powered by real-time streams.
+        </p>
+        <div class="flex gap-4">
+            <button class="px-8 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition shadow-lg">Get Started</button>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('bg-video');
+        const videoSrc = 'https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8';
+
+        // Check if HLS.js is supported
+        if (Hls.isSupported()) {
+            const hls = new Hls({
+                debug: false,
+            });
+            hls.loadSource(videoSrc);
+            hls.attachMedia(video);
+            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                // Play once the manifest is parsed
+                video.play().catch(e => console.error("Autoplay prevented:", e));
+            });
+        }
+        // Native HLS support (Safari)
+        else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            video.src = videoSrc;
+            video.addEventListener('loadedmetadata', function() {
+                video.play().catch(e => console.error("Autoplay prevented:", e));
+            });
+        }
+    </script>
+</body>
+</html>
