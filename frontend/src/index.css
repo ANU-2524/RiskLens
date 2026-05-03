@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cosmic-bg text-cosmic-text-primary font-sans antialiased;
+    background: radial-gradient(ellipse at 50% 0%, #0a0a2e 0%, #050510 60%);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-cosmic-bg-secondary;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cosmic-text-muted rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cosmic-text-secondary;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-cosmic-bg-card border border-cosmic-border rounded-xl p-4 shadow-card;
+    background: linear-gradient(135deg, rgba(13,13,32,0.9) 0%, rgba(10,10,26,0.95) 100%);
+  }
+
+  .card-elevated {
+    @apply bg-cosmic-bg-elevated border border-cosmic-border rounded-xl p-4 shadow-card;
+  }
+
+  .btn-primary {
+    @apply bg-cosmic-cyan text-cosmic-bg font-semibold px-4 py-2 rounded-lg
+           hover:bg-cosmic-cyan-dim transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-cosmic-cyan focus:ring-offset-2 focus:ring-offset-cosmic-bg;
+  }
+
+  .btn-ghost {
+    @apply border border-cosmic-border text-cosmic-text-secondary px-4 py-2 rounded-lg
+           hover:border-cosmic-cyan hover:text-cosmic-cyan transition-all duration-200
+           focus:outline-none focus:ring-2 focus:ring-cosmic-cyan focus:ring-offset-2 focus:ring-offset-cosmic-bg;
+  }
+
+  .severity-badge {
+    @apply text-xs font-mono font-semibold px-2 py-0.5 rounded uppercase tracking-wider;
+  }
+
+  .severity-critical {
+    @apply severity-badge bg-cosmic-red-glow text-cosmic-red border border-cosmic-red/30;
+  }
+
+  .severity-high {
+    @apply severity-badge bg-cosmic-amber-glow text-cosmic-amber border border-cosmic-amber/30;
+  }
+
+  .severity-medium {
+    @apply severity-badge bg-yellow-500/10 text-yellow-400 border border-yellow-500/30;
+  }
+
+  .severity-low {
+    @apply severity-badge bg-cosmic-cyan-glow text-cosmic-cyan border border-cosmic-cyan/30;
+  }
+
+  .glow-text-cyan {
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+  }
+
+  .glow-text-red {
+    text-shadow: 0 0 20px rgba(255, 59, 48, 0.6);
+  }
+
+  .input-cosmic {
+    @apply bg-cosmic-bg-elevated border border-cosmic-border rounded-lg px-4 py-2
+           text-cosmic-text-primary placeholder-cosmic-text-muted
+           focus:outline-none focus:border-cosmic-cyan focus:ring-1 focus:ring-cosmic-cyan
+           transition-all duration-200;
+  }
+}
+
+@layer utilities {
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #00D4FF 0%, #0099bb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-glow-cyan {
+    box-shadow: 0 0 0 1px rgba(0, 212, 255, 0.3), 0 0 20px rgba(0, 212, 255, 0.1);
+  }
+
+  .border-glow-red {
+    box-shadow: 0 0 0 1px rgba(255, 59, 48, 0.3), 0 0 20px rgba(255, 59, 48, 0.1);
+  }
+}

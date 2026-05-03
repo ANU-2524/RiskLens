@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "Frontend Lint on Save",
+  "description": "Run ESLint on React/TypeScript files when saved",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "frontend/src/**/*.{ts",
+      "tsx}"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "cd frontend && npm run lint"
+  },
+  "workspaceFolderName": "Mysterious",
+  "shortName": "frontend-lint-on-save"
+}

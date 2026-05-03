@@ -1,0 +1,18 @@
+{
+  "enabled": true,
+  "name": "Python Lint on Save",
+  "description": "Run ruff linting and mypy type checking on Python files when saved",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "backend/**/*.py"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "cd backend && ruff check ${file} && mypy ${file}"
+  },
+  "workspaceFolderName": "Mysterious",
+  "shortName": "python-lint-on-save"
+}

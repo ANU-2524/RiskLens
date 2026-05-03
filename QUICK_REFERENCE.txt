@@ -1,0 +1,129 @@
+═══════════════════════════════════════════════════════════════════════════════
+  ORACLE — QUICK REFERENCE CARD
+═══════════════════════════════════════════════════════════════════════════════
+
+🌐 ACCESS URLS
+═══════════════════════════════════════════════════════════════════════════════
+  Frontend:     http://localhost:5155
+  Backend API:  http://localhost:8000
+  API Docs:     http://localhost:8000/docs
+  Health Check: http://localhost:8000/health
+
+🔑 LOGIN CREDENTIALS
+═══════════════════════════════════════════════════════════════════════════════
+  Analyst:  demo@oracle.ai    / oracle2024  (full access)
+  Viewer:   viewer@oracle.ai  / viewer2024  (read-only)
+
+🚀 QUICK START COMMANDS
+═══════════════════════════════════════════════════════════════════════════════
+  # Setup
+  cp .env.example .env
+
+  # Start everything
+  docker-compose up --build
+
+  # Seed data (in NEW terminal)
+  docker-compose exec backend python -m app.db.seed
+
+  # Stop everything
+  Ctrl+C (in docker-compose terminal)
+  docker-compose down
+
+  # Clean restart (removes all data)
+  docker-compose down -v
+  docker-compose up --build
+
+📊 PORTS
+═══════════════════════════════════════════════════════════════════════════════
+  5155  - Frontend (React/Vite)
+  8000  - Backend API (FastAPI)
+  5432  - PostgreSQL
+  6379  - Redis
+
+🔍 USEFUL COMMANDS
+═══════════════════════════════════════════════════════════════════════════════
+  # View logs
+  docker-compose logs backend
+  docker-compose logs frontend
+  docker-compose logs postgres
+
+  # Restart a service
+  docker-compose restart backend
+
+  # Run backend shell
+  docker-compose exec backend bash
+
+  # Run database migrations
+  docker-compose exec backend alembic upgrade head
+
+  # Run tests
+  docker-compose exec backend pytest
+
+  # Check running containers
+  docker-compose ps
+
+📁 KEY FILES
+═══════════════════════════════════════════════════════════════════════════════
+  START_HERE.md           - Start here!
+  QUICKSTART.md           - 5-minute setup
+  README.md               - Main documentation
+  SETUP.md                - Detailed setup guide
+  PORT_CONFIGURATION.md   - Port setup details
+  docker-compose.yml      - Service orchestration
+  .env.example            - Environment template
+
+🎯 DEMO CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+  [ ] Frontend loads at http://localhost:5155
+  [ ] Can login with demo@oracle.ai
+  [ ] Galaxy Map shows ~25 stars
+  [ ] Click star → entity panel opens
+  [ ] Query bar returns AI response
+  [ ] Dashboard shows charts
+  [ ] Timeline shows SVB risk history
+  [ ] Can generate PDF report
+
+🐛 TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+  Port in use:
+    lsof -i :5155  (Mac/Linux)
+    netstat -ano | findstr :5155  (Windows)
+
+  Connection error:
+    - Wait 30 seconds for backend to start
+    - Check: http://localhost:8000/health
+    - Refresh browser
+
+  Seed fails:
+    - Ensure docker-compose is running
+    - Wait 30 seconds, try again
+    - Check logs: docker-compose logs backend
+
+  Build fails:
+    - Check internet connection
+    - Free up disk space (~5GB needed)
+    - Try: docker-compose build --no-cache
+
+📚 DOCUMENTATION
+═══════════════════════════════════════════════════════════════════════════════
+  START_HERE.md          - Navigation guide
+  QUICKSTART.md          - 5-minute start
+  README.md              - Full documentation
+  SETUP.md               - Deployment guide
+  ARCHITECTURE.md        - System architecture
+  PROJECT_SUMMARY.md     - Project overview
+  PORT_CONFIGURATION.md  - Port details
+
+🎤 30-SECOND PITCH
+═══════════════════════════════════════════════════════════════════════════════
+  "Oracle is an AI-powered risk intelligence platform that would have
+  predicted SVB's collapse 9 days early, FTX 8 days early, and Evergrande
+  6 weeks early. It ingests 500+ data points per hour from news, SEC
+  filings, and market data. Uses NLP and Claude API to generate real-time
+  risk summaries. Built with FastAPI, React, Three.js. Production-ready
+  with Docker, full test coverage, and comprehensive documentation."
+
+═══════════════════════════════════════════════════════════════════════════════
+  Ready to run? → docker-compose up --build
+  Need help? → See START_HERE.md
+═══════════════════════════════════════════════════════════════════════════════

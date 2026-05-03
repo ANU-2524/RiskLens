@@ -1,0 +1,230 @@
+═══════════════════════════════════════════════════════════════════════════════
+  ORACLE — AI-POWERED RISK INTELLIGENCE PLATFORM
+  Complete Setup & Run Instructions
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 PREREQUISITES
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Install Docker Desktop
+   - Download from: https://www.docker.com/products/docker-desktop
+   - Make sure Docker is running (check system tray/menu bar)
+
+2. (Optional but Recommended) Get API Keys
+   - Claude API: https://console.anthropic.com/
+   - Alpha Vantage: https://www.alphavantage.co/support/#api-key
+
+═══════════════════════════════════════════════════════════════════════════════
+🚀 STEP-BY-STEP SETUP
+═══════════════════════════════════════════════════════════════════════════════
+
+STEP 1: Configure Environment
+──────────────────────────────────────────────────────────────────────────────
+
+Windows (PowerShell):
+  Copy-Item .env.example .env
+
+Mac/Linux (Terminal):
+  cp .env.example .env
+
+Then edit .env file and add your API keys (optional):
+  ANTHROPIC_API_KEY=your-key-here
+  ALPHA_VANTAGE_API_KEY=your-key-here
+
+Note: The platform works without API keys but with limited AI features.
+
+──────────────────────────────────────────────────────────────────────────────
+STEP 2: Start All Services
+──────────────────────────────────────────────────────────────────────────────
+
+In your terminal, run:
+
+  docker-compose up --build
+
+This will:
+  ✓ Build Docker images (first time takes 5-10 minutes)
+  ✓ Start PostgreSQL database
+  ✓ Start Redis cache
+  ✓ Start FastAPI backend
+  ✓ Start Celery workers
+  ✓ Start React frontend
+
+Wait until you see:
+  ✓ "oracle-backend    | INFO:     Application startup complete"
+  ✓ "oracle-frontend   | VITE ... ready in ... ms"
+
+──────────────────────────────────────────────────────────────────────────────
+STEP 3: Seed Demo Data
+──────────────────────────────────────────────────────────────────────────────
+
+IMPORTANT: Keep the docker-compose terminal running!
+
+Open a NEW terminal window and run:
+
+  docker-compose exec backend python -m app.db.seed
+
+This creates:
+  ✓ 25+ tracked entities (SVB, FTX, Evergrande, etc.)
+  ✓ 500+ historical signals
+  ✓ Risk scores showing predictive capabilities
+  ✓ 2 demo users (analyst and viewer)
+
+You should see:
+  "Database seed complete"
+
+──────────────────────────────────────────────────────────────────────────────
+STEP 4: Access Oracle
+──────────────────────────────────────────────────────────────────────────────
+
+Open your web browser and go to:
+
+  http://localhost:5173
+
+Login with:
+  Email:    demo@oracle.ai
+  Password: oracle2024
+
+Alternative login (read-only):
+  Email:    viewer@oracle.ai
+  Password: viewer2024
+
+═══════════════════════════════════════════════════════════════════════════════
+🎯 WHAT TO TRY
+═══════════════════════════════════════════════════════════════════════════════
+
+1. GALAXY MAP (Homepage)
+   - See 3D star field with ~25 entities
+   - Stars are color-coded by risk (cyan=low, red=critical)
+   - Click any star to open entity detail panel
+
+2. NATURAL LANGUAGE QUERY (Top search bar)
+   - Ask: "What companies in Asia are at high risk?"
+   - Ask: "Which crypto exchanges show elevated risk?"
+   - Ask: "What is the current state of supply chain risk?"
+
+3. LIVE RISK FEED (Left sidebar)
+   - See real-time alerts streaming in
+   - Click any alert to view entity details
+
+4. DASHBOARD (Navigation menu)
+   - View summary statistics
+   - See sector risk comparison charts
+   - Identify highest risk entities
+
+5. TIMELINE EXPLORER (Navigation menu)
+   - Select "Silicon Valley Bank"
+   - View 30-day risk score history
+   - See how Oracle flagged risk before collapse
+
+6. PDF REPORTS (Navigation menu)
+   - Select any entity
+   - Click "Generate PDF Report"
+   - Download professional risk report
+
+═══════════════════════════════════════════════════════════════════════════════
+🔍 VERIFY EVERYTHING IS WORKING
+═══════════════════════════════════════════════════════════════════════════════
+
+Check these URLs:
+
+  Frontend:  http://localhost:5173
+  Backend:   http://localhost:8000/health
+  API Docs:  http://localhost:8000/docs
+
+All should respond successfully.
+
+═══════════════════════════════════════════════════════════════════════════════
+🛑 HOW TO STOP
+═══════════════════════════════════════════════════════════════════════════════
+
+In the terminal running docker-compose:
+  Press Ctrl+C
+
+To completely stop and remove containers:
+  docker-compose down
+
+To stop and remove all data (fresh start):
+  docker-compose down -v
+
+═══════════════════════════════════════════════════════════════════════════════
+🐛 TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+PROBLEM: "Port already in use"
+SOLUTION:
+  Check what's using the port:
+    Windows: netstat -ano | findstr :8000
+    Mac/Linux: lsof -i :8000
+  
+  Kill the process or change ports in docker-compose.yml
+
+──────────────────────────────────────────────────────────────────────────────
+PROBLEM: "Cannot connect to Docker daemon"
+SOLUTION:
+  - Make sure Docker Desktop is running
+  - Check system tray (Windows) or menu bar (Mac)
+  - Restart Docker Desktop if needed
+
+──────────────────────────────────────────────────────────────────────────────
+PROBLEM: Frontend shows "Connection Error"
+SOLUTION:
+  - Wait 30 seconds for backend to fully start
+  - Check backend health: http://localhost:8000/health
+  - Refresh the browser
+  - Check docker-compose logs: docker-compose logs backend
+
+──────────────────────────────────────────────────────────────────────────────
+PROBLEM: Seed command fails
+SOLUTION:
+  - Make sure docker-compose is running
+  - Check database is ready: docker-compose logs postgres
+  - Try again after 30 seconds
+  - If still failing, restart: docker-compose restart backend
+
+──────────────────────────────────────────────────────────────────────────────
+PROBLEM: Build takes too long or fails
+SOLUTION:
+  - Check your internet connection
+  - Free up disk space (Docker needs ~5GB)
+  - Restart Docker Desktop
+  - Try: docker-compose build --no-cache
+
+═══════════════════════════════════════════════════════════════════════════════
+📚 ADDITIONAL RESOURCES
+═══════════════════════════════════════════════════════════════════════════════
+
+  README.md          - Full project documentation
+  QUICKSTART.md      - 5-minute quick start guide
+  SETUP.md           - Detailed setup and deployment guide
+  PROJECT_SUMMARY.md - Complete project overview
+
+  API Documentation: http://localhost:8000/docs (when running)
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ SUCCESS CHECKLIST
+═══════════════════════════════════════════════════════════════════════════════
+
+Before your demo, verify:
+
+  [ ] docker-compose up runs without errors
+  [ ] Seed command completes successfully
+  [ ] Frontend loads at http://localhost:5173
+  [ ] Can login with demo@oracle.ai / oracle2024
+  [ ] Galaxy Map shows ~25 stars
+  [ ] Can click a star and see entity details
+  [ ] Natural language query returns AI response
+  [ ] Dashboard shows sector charts
+  [ ] Timeline shows risk history for SVB
+  [ ] Can generate and download PDF report
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎉 YOU'RE READY!
+
+Oracle is now running locally. Explore the platform, review the code, and
+prepare your demo narrative.
+
+For questions or issues, check the troubleshooting section above or review
+the documentation files.
+
+═══════════════════════════════════════════════════════════════════════════════
