@@ -5,6 +5,7 @@ import { DashboardPage } from '@/pages/Dashboard'
 import { TimelinePage } from '@/pages/Timeline'
 import { ReportsPage } from '@/pages/Reports'
 import { LoginPage } from '@/pages/Login'
+import { LandingPage } from '@/pages/Landing'
 import { useAuthStore } from '@/store/authStore'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -14,12 +15,15 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const token = useAuthStore((s) => s.token)
+
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={token ? <Navigate to="/app" replace /> : <LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route
-          path="/"
+          path="/app"
           element={
             <ProtectedRoute>
               <Layout />

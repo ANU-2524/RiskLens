@@ -13,9 +13,41 @@
 
   body {
     @apply bg-cosmic-bg text-cosmic-text-primary font-sans antialiased;
-    background: radial-gradient(ellipse at 50% 0%, #0a0a2e 0%, #050510 60%);
+    background: 
+      radial-gradient(ellipse at 20% 30%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 70%, rgba(138, 43, 226, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 0%, #0a0a2e 0%, #050510 60%);
     min-height: 100vh;
     overflow-x: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 25%),
+      radial-gradient(circle at 80% 80%, rgba(138, 43, 226, 0.1) 0%, transparent 25%),
+      radial-gradient(circle at 40% 20%, rgba(255, 255, 255, 0.03) 0%, transparent 20%);
+    animation: cosmic-drift 60s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes cosmic-drift {
+    0%, 100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+      transform: translate(5%, 5%) rotate(120deg);
+    }
+    66% {
+      transform: translate(-5%, 5%) rotate(240deg);
+    }
   }
 
   ::-webkit-scrollbar {
@@ -108,5 +140,68 @@
 
   .border-glow-red {
     box-shadow: 0 0 0 1px rgba(255, 59, 48, 0.3), 0 0 20px rgba(255, 59, 48, 0.1);
+  }
+
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.3;
+    }
+    25% {
+      transform: translateY(-20px) translateX(10px);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translateY(-40px) translateX(-10px);
+      opacity: 0.8;
+    }
+    75% {
+      transform: translateY(-20px) translateX(10px);
+      opacity: 0.6;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 1s ease-out 0.3s both;
+  }
+
+  .animate-fade-in-up-delay {
+    animation: fadeInUp 1s ease-out 0.6s both;
+  }
+
+  .animate-fade-in-up-delay-2 {
+    animation: fadeInUp 1s ease-out 0.9s both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .shadow-cyan-glow-lg {
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.6), 0 0 80px rgba(0, 212, 255, 0.3);
   }
 }

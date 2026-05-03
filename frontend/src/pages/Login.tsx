@@ -55,11 +55,11 @@ export function LoginPage() {
         {/* Logo */}
         <div className="flex items-center justify-center mb-8">
           <div className="w-16 h-16 rounded-full bg-cosmic-cyan/20 border-2 border-cosmic-cyan flex items-center justify-center">
-            <span className="text-cosmic-cyan text-3xl font-bold">O</span>
+            <span className="text-cosmic-cyan text-3xl font-bold">M</span>
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold text-center text-gradient-cyan mb-2">Oracle</h1>
+        <h1 className="text-2xl font-bold text-center text-gradient-cyan mb-2">Mysterious</h1>
         <p className="text-center text-cosmic-text-muted text-sm mb-8">
           AI-Powered Risk Intelligence Platform
         </p>

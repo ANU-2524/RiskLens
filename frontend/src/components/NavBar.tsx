@@ -3,10 +3,10 @@ import { motion } from 'framer-motion'
 import { useAuthStore } from '@/store/authStore'
 
 const NAV_LINKS = [
-  { path: '/', label: 'Galaxy Map' },
-  { path: '/dashboard', label: 'Dashboard' },
-  { path: '/timeline', label: 'Timeline' },
-  { path: '/reports', label: 'Reports' },
+  { path: '/app', label: 'Galaxy Map' },
+  { path: '/app/dashboard', label: 'Dashboard' },
+  { path: '/app/timeline', label: 'Timeline' },
+  { path: '/app/reports', label: 'Reports' },
 ]
 
 export function NavBar() {
@@ -22,12 +22,12 @@ export function NavBar() {
   return (
     <nav className="flex items-center justify-between px-6 py-3 border-b border-cosmic-border bg-cosmic-bg-secondary/80 backdrop-blur-sm z-50 flex-shrink-0">
       {/* Logo */}
-      <Link to="/" className="flex items-center gap-3 group">
+      <Link to="/app" className="flex items-center gap-3 group">
         <div className="w-8 h-8 rounded-full bg-cosmic-cyan/20 border border-cosmic-cyan/40 flex items-center justify-center group-hover:shadow-cyan-glow transition-all duration-300">
-          <span className="text-cosmic-cyan text-sm font-bold">O</span>
+          <span className="text-cosmic-cyan text-sm font-bold">M</span>
         </div>
         <span className="font-semibold text-cosmic-text-primary tracking-wide">
-          <span className="text-gradient-cyan">Oracle</span>
+          <span className="text-gradient-cyan">Mysterious</span>
           <span className="text-cosmic-text-muted text-xs ml-2 font-mono">RISK INTELLIGENCE</span>
         </span>
       </Link>
