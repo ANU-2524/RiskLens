@@ -49,7 +49,7 @@ export function ReportsPage() {
 
       doc.setFontSize(24)
       const scoreColor = entity.current_risk_score && entity.current_risk_score >= 60 ? [255, 59, 48] : [0, 212, 255]
-      doc.setTextColor(...scoreColor)
+      doc.setTextColor(scoreColor[0], scoreColor[1], scoreColor[2])
       doc.text(`${entity.current_risk_score?.toFixed(1) ?? 'N/A'}/100`, 14, 82)
 
       doc.setFontSize(10)

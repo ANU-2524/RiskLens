@@ -1,4 +1,4 @@
-# Oracle — AI-Powered Global Business Risk Intelligence Platform
+# Mysterious — AI-Powered Global Business Risk Intelligence Platform
 
 ![Oracle Banner](https://img.shields.io/badge/Oracle-Risk%20Intelligence-00D4FF?style=for-the-badge)
 ![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square)
@@ -6,13 +6,13 @@
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?style=flat-square)
 
-## 🌌 The Problem
+## The Problem
 
 Every major corporate disaster of the last decade — **Enron, Lehman Brothers, SVB, FTX, Evergrande** — had publicly available warning signals weeks or months before collapse. Analysts missed them because they were buried across thousands of documents, feeds, and data sources that no human team could monitor simultaneously.
 
 **Oracle fixes this.**
 
-## 🎯 What Oracle Does
+## What Oracle Does
 
 Oracle is a production-grade, AI-powered early warning system that monitors global business risk in real time. It:
 
@@ -23,7 +23,7 @@ Oracle is a production-grade, AI-powered early warning system that monitors glob
 
 **The result:** A real-time intelligence platform that would have flagged SVB's risk 3 weeks before collapse, spotted FTX's unusual withdrawal patterns, and alerted supply chain managers to COVID disruptions before their shelves went empty.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -81,42 +81,42 @@ This populates the database with realistic historical data demonstrating Oracle'
   - Analyst: `demo@oracle.ai` / `oracle2024`
   - Viewer: `viewer@oracle.ai` / `viewer2024`
 
-## 🎨 Features
+## Features
 
-### 🌠 Galaxy Map (3D Visualization)
+### Galaxy Map (3D Visualization)
 - Interactive Three.js star field where each star = one tracked entity
 - Star brightness and size = risk score
 - Color-coded by severity (cyan = low, amber = high, red = critical)
 - Click any star to open detailed entity panel
 
-### 📊 Risk Dashboard
+### Risk Dashboard
 - Real-time summary statistics
 - Sector risk comparison charts
 - Highest risk entity spotlight
 - Severity distribution breakdown
 
-### 📈 Timeline Explorer
+### Timeline Explorer
 - Historical risk score analysis for any entity
 - Configurable time windows (7, 30, 90, 180 days)
 - Annotated event markers
 - Compare multiple entities side-by-side
 
-### 🔍 Natural Language Query
+### Natural Language Query
 - Ask Oracle anything: "What companies in Asia are at high risk?"
 - Claude-powered AI responses grounded in live data
 - Query history tracking
 
-### 📄 PDF Report Generation
+### PDF Report Generation
 - Professional audit-ready risk reports
 - Includes risk score history, AI summaries, contributing signals
 - One-click download
 
-### 🔴 Live Risk Feed
+### Live Risk Feed
 - WebSocket-powered real-time alert stream
 - Severity-filtered views
 - Click any alert to view full entity detail
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 oracle/
@@ -139,7 +139,7 @@ oracle/
 └── docker-compose.yml   # Full stack orchestration
 ```
 
-## 🧠 AI Integration
+## AI Integration
 
 Oracle uses **Claude 3.5 Sonnet** for:
 
@@ -158,7 +158,7 @@ Oracle uses **Claude 3.5 Sonnet** for:
 
 **Rate Limiting:** Max 50 Claude calls/hour to control costs. Fallback to rule-based summaries when limit reached.
 
-## 📊 Risk Scoring Formula
+## Risk Scoring Formula
 
 ```
 Risk Score = (|sentiment_delta| × 0.4) + (volume_anomaly × 0.3) + (price_volatility × 0.3)
@@ -245,7 +245,7 @@ Use managed PostgreSQL 15+ with connection pooling enabled.
 
 Use managed Redis 7+ for caching and Celery broker.
 
-## 🎤 Interview Narrative
+## Narrative
 
 > "This is the system I built to solve a $100B problem. Every major corporate disaster — SVB, FTX, Evergrande — had publicly available warning signals weeks before collapse. Oracle ingests 500+ data points per hour from news, SEC filings, market data, and social signals. It uses NLP to extract entities and sentiment, runs anomaly detection on financial patterns, and sends risk clusters to Claude API which generates plain-English summaries.
 >
@@ -253,19 +253,7 @@ Use managed Redis 7+ for caching and Celery broker.
 >
 > This is the kind of system KPMG uses to audit risk, Morgan Stanley uses to protect portfolios, Walmart uses to protect its supply chain, and Google uses to protect its cloud customers. I built it solo in [timeframe], and it's production-ready."
 
-## 🧪 Demo Data Highlights
 
-The seeded database includes realistic historical signals demonstrating Oracle's predictive power:
-
-- **SVB (March 2023):** Risk flagged CRITICAL 9 days before FDIC seizure
-- **FTX (Nov 2022):** HIGH risk detected 8 days before bankruptcy filing
-- **Evergrande (2021):** CRITICAL status 6 weeks before missed bond payment
-- **COVID Supply Chain (2020):** Early detection of port congestion patterns
-- **Russia-Ukraine Energy (2022):** European energy crisis flagged within 48 hours
-
-## 📜 License
-
-MIT License - see LICENSE file for details.
 
 ## 🙏 Acknowledgments
 
@@ -277,5 +265,8 @@ Built with:
 - [HuggingFace Transformers](https://huggingface.co/) - Sentiment analysis
 
 ---
+**New Learning :** 
+- Github pages only used to deploy frontend, not backend.
+- SEC filing: an official document that a company submits to the U.S. Securities and Exchange Commission to report its financial and business information.
 
-**Oracle** — Seeing risk before it becomes crisis.
+**Mysterious** — Seeing risk before it becomes crisis.

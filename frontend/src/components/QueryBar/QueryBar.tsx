@@ -16,7 +16,7 @@ export function QueryBar() {
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<QueryResponse | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { queryHistory, addQueryToHistory } = useUIStore()
+  const { addQueryToHistory } = useUIStore()
 
   async function handleSubmit(q: string) {
     if (!q.trim()) return
