@@ -42,6 +42,11 @@ class Settings(BaseSettings):
     # Market Data
     alpha_vantage_api_key: str = ""
 
+    # Qdrant Vector DB
+    qdrant_url: str = "http://localhost:6333"
+    qdrant_collection_name: str = "oracle_signals"
+    embedding_model: str = "all-MiniLM-L6-v2"
+
     # CORS
     cors_origins: List[str] = ["http://localhost:5155", "http://localhost:3000"]
 

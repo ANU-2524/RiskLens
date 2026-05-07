@@ -18,7 +18,7 @@ export default function App() {
   const token = useAuthStore((s) => s.token)
 
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
         <Route path="/" element={token ? <Navigate to="/app" replace /> : <LandingPage />} />
         <Route path="/login" element={<LoginPage />} />

@@ -8,6 +8,7 @@ from sqlalchemy import or_, select
 
 from app.api.deps import CurrentUser, DBSession
 from app.db.models import AISummary, Entity, RiskScore, Signal
+from app.db.vector import vector_store
 from app.processing.claude import answer_natural_language_query
 from sqlalchemy import desc
 
@@ -46,19 +47,28 @@ async def search_entities(
     _: CurrentUser,
     q: str = Query(..., min_length=2),
 ) -> List[SearchResult]:
-    """Search entities and signals by keyword."""
-    search_term = f"%{q}%"
+    """Search entities and signals using Semantic (Vector) + Keyword search."""
+    
+    # 1. Semantic Search using Qdrant (Finds conceptual matches)
+    try:
+        vector_results = await vector_store.search_similar(q, limit=10)
+        vector_entity_names = [p.payload["entity_name"] for p in vector_results]
+    except Exception:
+        vector_entity_names = []
 
-    # Search entities by name, description, sector
+    # 2. Hybrid Retrieval: Keyword match + Semantic influence
+    query_filters = [
+        Entity.name.ilike(f"%{q}%"),
+        Entity.description.ilike(f"%{q}%"),
+        Entity.sector.ilike(f"%{q}%"),
+        Entity.ticker.ilike(f"%{q}%"),
+    ]
+    
+    if vector_entity_names:
+        query_filters.append(Entity.name.in_(vector_entity_names))
+
     entity_result = await db.execute(
-        select(Entity).where(
-            or_(
-                Entity.name.ilike(search_term),
-                Entity.description.ilike(search_term),
-                Entity.sector.ilike(search_term),
-                Entity.ticker.ilike(search_term),
-            )
-        ).limit(20)
+        select(Entity).where(or_(*query_filters)).limit(20)
     )
     entities = entity_result.scalars().all()
 

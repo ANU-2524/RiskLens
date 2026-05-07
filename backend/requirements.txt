@@ -52,3 +52,7 @@ factory-boy==3.3.0
 # Dev tools
 ruff==0.4.4
 mypy==1.10.0
+
+# Vector Search
+qdrant-client==1.9.1
+sentence-transformers==2.7.0

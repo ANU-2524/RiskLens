@@ -4,30 +4,34 @@ import { apiClient } from '@/api/client'
 import { useAuthStore } from '@/store/authStore'
 
 export function LoginPage() {
-  const [email, setEmail] = useState('demo@oracle.ai')
-  const [password, setPassword] = useState('oracle2024')
+  const [isRegistering, setIsRegistering] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [role, setRole] = useState('ANALYST')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const setAuth = useAuthStore((s) => s.setAuth)
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError('')
     setIsLoading(true)
 
     try {
-      const { data } = await apiClient.post<{ access_token: string }>('/auth/login', {
-        email,
-        password,
-      })
+      const endpoint = isRegistering ? '/auth/register' : '/auth/login'
+      const payload = isRegistering 
+        ? { email, password, role } 
+        : { email, password }
+
+      const { data } = await apiClient.post<{ access_token: string }>(endpoint, payload)
 
       // Decode JWT to extract user info (simple base64 decode)
-      const payload = JSON.parse(atob(data.access_token.split('.')[1]))
-      setAuth(data.access_token, payload.email, payload.role)
+      const jwtPayload = JSON.parse(atob(data.access_token.split('.')[1]))
+      setAuth(data.access_token, jwtPayload.email, jwtPayload.role)
       navigate('/')
     } catch (err: any) {
-      setError(err.response?.data?.detail ?? 'Login failed. Please try again.')
+      setError(err.response?.data?.detail ?? (isRegistering ? 'Registration failed' : 'Login failed'))
     } finally {
       setIsLoading(false)
     }
@@ -61,10 +65,10 @@ export function LoginPage() {
 
         <h1 className="text-2xl font-bold text-center text-gradient-cyan mb-2">RiskLens</h1>
         <p className="text-center text-cosmic-text-muted text-sm mb-8">
-          AI-Powered Risk Intelligence Platform
+          {isRegistering ? 'Create your Analyst account' : 'AI-Powered Risk Intelligence Platform'}
         </p>
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-xs text-cosmic-text-muted uppercase tracking-wider mb-2">
               Email
@@ -89,9 +93,25 @@ export function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="input-cosmic w-full"
               required
-              autoComplete="current-password"
+              autoComplete={isRegistering ? "new-password" : "current-password"}
             />
           </div>
+
+          {isRegistering && (
+            <div>
+              <label className="block text-xs text-cosmic-text-muted uppercase tracking-wider mb-2">
+                Role
+              </label>
+              <select 
+                value={role} 
+                onChange={(e) => setRole(e.target.value)}
+                className="input-cosmic w-full bg-cosmic-bg"
+              >
+                <option value="ANALYST">Analyst</option>
+                <option value="VIEWER">Viewer</option>
+              </select>
+            </div>
+          )}
 
           {error && (
             <div className="bg-cosmic-red-glow border border-cosmic-red/30 rounded-lg p-3 text-sm text-cosmic-red">
@@ -104,19 +124,23 @@ export function LoginPage() {
             disabled={isLoading}
             className="btn-primary w-full py-3 text-base disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? (isRegistering ? 'Registering...' : 'Signing in...') : (isRegistering ? 'Create Account' : 'Sign In')}
           </button>
         </form>
 
+        <div className="mt-4 text-center">
+          <button 
+            onClick={() => setIsRegistering(!isRegistering)}
+            className="text-xs text-cosmic-cyan hover:underline"
+          >
+            {isRegistering ? 'Already have an account? Sign in' : "Don't have an account? Register"}
+          </button>
+        </div>
+
         <div className="mt-6 pt-6 border-t border-cosmic-border">
           <p className="text-xs text-cosmic-text-muted text-center mb-2">Demo Credentials:</p>
-          <div className="space-y-1 text-xs text-cosmic-text-secondary">
-            <p>
-              <span className="text-cosmic-cyan">Analyst:</span> demo@oracle.ai / oracle2024
-            </p>
-            <p>
-              <span className="text-cosmic-cyan">Viewer:</span> viewer@oracle.ai / viewer2024
-            </p>
+          <div className="space-y-1 text-xs text-cosmic-text-secondary italic opacity-70">
+            <p>demo@oracle.ai / oracle2024</p>
           </div>
         </div>
       </div>

@@ -65,6 +65,7 @@ def ingest_news_task(self: Any) -> dict:
         from app.ingestion.news import ingest_all_feeds
         from app.db.session import AsyncSessionLocal
         from app.db.models import Signal, Entity, SignalType
+        from app.db.vector import vector_store
         from sqlalchemy import select
 
         async def _run() -> dict:
@@ -91,6 +92,22 @@ def ingest_news_task(self: Any) -> dict:
                                 entities_mentioned=article.entities,
                             )
                             session.add(signal)
+                            await session.flush()  # Get signal ID
+                            
+                            # Semantic Indexing in Qdrant
+                            try:
+                                await vector_store.upsert_signal(
+                                    signal_id=signal.id,
+                                    text=article.raw_text[:1000],
+                                    metadata={
+                                        "entity_name": entity.name,
+                                        "sentiment": float(article.sentiment_score or 0),
+                                        "source": article.source
+                                    }
+                                )
+                            except Exception as e:
+                                logger.error("vector_indexing_failed", error=str(e), signal_id=signal.id)
+
                             count += 1
 
                 await session.commit()
