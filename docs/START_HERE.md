@@ -1,4 +1,4 @@
-# 🎯 START HERE — Oracle Platform
+# 🎯 START HERE — RiskLens Platform
 
 ## ✅ Project Status: **COMPLETE & READY TO RUN**
 
@@ -46,7 +46,7 @@ docker-compose exec backend python -m app.db.seed
 
 # 4. Open browser
 # http://localhost:5173
-# Login: demo@oracle.ai / oracle2024
+# Login: demo@RiskLens.ai / RiskLens2024
 ```
 
 That's it! 🎉
@@ -55,7 +55,7 @@ That's it! 🎉
 
 ## 🎯 What You've Built
 
-**Oracle** is an AI-powered early warning system that monitors global business risk in real time.
+**RiskLens** is an AI-powered early warning system that monitors global business risk in real time.
 
 ### Key Features:
 - ✅ **3D Galaxy Map** — Interactive Three.js visualization
@@ -86,7 +86,7 @@ That's it! 🎉
 
 ## 🎤 Interview Narrative (30-Second Version)
 
-> "I built Oracle — an AI-powered risk intelligence platform that would have predicted the SVB collapse 9 days early, FTX 8 days early, and Evergrande 6 weeks early.
+> "I built RiskLens — an AI-powered risk intelligence platform that would have predicted the SVB collapse 9 days early, FTX 8 days early, and Evergrande 6 weeks early.
 >
 > It ingests 500+ data points per hour from news, SEC filings, and market data. Uses NLP for entity extraction and sentiment analysis. Runs anomaly detection on financial patterns. And sends risk clusters to Claude API which generates plain-English summaries.
 >
@@ -98,17 +98,17 @@ That's it! 🎉
 
 ## 🎤 Interview Narrative (2-Minute Version)
 
-> "Let me show you Oracle — an AI-powered risk intelligence platform I built to solve a $100 billion problem.
+> "Let me show you RiskLens — an AI-powered risk intelligence platform I built to solve a $100 billion problem.
 >
 > **The Problem:** Every major corporate disaster — SVB, FTX, Evergrande — had publicly available warning signals weeks before collapse. Analysts missed them because they were buried across thousands of documents that no human team could monitor simultaneously.
 >
-> **The Solution:** Oracle ingests 500+ data points per hour from news feeds, SEC filings, market data, and social signals. It uses spaCy for named entity recognition, HuggingFace for sentiment analysis, and custom algorithms for anomaly detection. When an entity crosses the 60/100 risk threshold, it sends the data to Claude API which generates plain-English summaries explaining what's happening and why it matters.
+> **The Solution:** RiskLens ingests 500+ data points per hour from news feeds, SEC filings, market data, and social signals. It uses spaCy for named entity recognition, HuggingFace for sentiment analysis, and custom algorithms for anomaly detection. When an entity crosses the 60/100 risk threshold, it sends the data to Claude API which generates plain-English summaries explaining what's happening and why it matters.
 >
-> **The Demo:** [Show Galaxy Map] This 3D visualization shows ~25 tracked entities. Each star's size and color indicate risk level. [Click SVB] Here's Silicon Valley Bank. Oracle flagged this as CRITICAL 9 days before the FDIC seizure. The AI summary explains the signals — unrealized bond losses, unusual withdrawal patterns, VC advisor communications.
+> **The Demo:** [Show Galaxy Map] This 3D visualization shows ~25 tracked entities. Each star's size and color indicate risk level. [Click SVB] Here's Silicon Valley Bank. RiskLens flagged this as CRITICAL 9 days before the FDIC seizure. The AI summary explains the signals — unrealized bond losses, unusual withdrawal patterns, VC advisor communications.
 >
 > [Show Timeline] This chart shows how the risk score escalated over 3 weeks. Every spike corresponds to a real signal.
 >
-> [Use Query Bar] I can ask Oracle anything in natural language. 'What crypto exchanges show elevated risk?' [Show response]
+> [Use Query Bar] I can ask RiskLens anything in natural language. 'What crypto exchanges show elevated risk?' [Show response]
 >
 > [Show Dashboard] The dashboard aggregates risk across sectors with real-time charts.
 >
@@ -122,12 +122,12 @@ That's it! 🎉
 
 ## 📋 Pre-Demo Checklist
 
-Before showing Oracle to anyone:
+Before showing RiskLens to anyone:
 
 - [ ] Run `docker-compose up --build` successfully
 - [ ] Seed data with `docker-compose exec backend python -m app.db.seed`
 - [ ] Verify frontend loads at http://localhost:5173
-- [ ] Login works with demo@oracle.ai / oracle2024
+- [ ] Login works with demo@RiskLens.ai / RiskLens2024
 - [ ] Galaxy Map shows ~25 stars
 - [ ] Can click a star and see entity details
 - [ ] Natural language query returns AI response
@@ -141,7 +141,7 @@ Before showing Oracle to anyone:
 ## 🗂️ File Structure Overview
 
 ```
-oracle/
+RiskLens/
 ├── START_HERE.md           ← You are here
 ├── QUICKSTART.md           ← 5-minute setup guide
 ├── README.md               ← Main documentation
@@ -232,7 +232,7 @@ You'll know everything is working when:
 
 ## 🏆 You're Ready!
 
-Oracle is **production-grade**, **demo-ready**, and **interview-ready**.
+RiskLens is **production-grade**, **demo-ready**, and **interview-ready**.
 
 The platform demonstrates:
 - ✅ Full-stack development (backend, frontend, database, caching)
@@ -247,4 +247,5 @@ The platform demonstrates:
 
 ---
 
-**Oracle** — Seeing risk before it becomes crisis.
+**RiskLens** — Seeing risk before it becomes crisis.
+

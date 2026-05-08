@@ -8,7 +8,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    """Oracle application settings."""
+    """RiskLens application settings."""
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     debug: bool = False
 
     # Database
-    database_url: str = "postgresql+asyncpg://oracle:oracle@localhost:5432/oracle_db"
+    database_url: str = "postgresql+asyncpg://RiskLens:RiskLens@localhost:5432/RiskLens_db"
 
     # Redis
     redis_url: str = "redis://localhost:6379/0"
@@ -44,7 +44,7 @@ class Settings(BaseSettings):
 
     # Qdrant Vector DB
     qdrant_url: str = "http://localhost:6333"
-    qdrant_collection_name: str = "oracle_signals"
+    qdrant_collection_name: str = "RiskLens_signals"
     embedding_model: str = "all-MiniLM-L6-v2"
 
     # CORS
@@ -84,3 +84,4 @@ def get_settings() -> Settings:
 
 
 settings = get_settings()
+

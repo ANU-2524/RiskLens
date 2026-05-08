@@ -49,7 +49,7 @@ export function QueryBar() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSubmit(query)}
-                placeholder="Ask Oracle anything... e.g. 'What companies are at critical risk?'"
+                placeholder="Ask RiskLens anything... e.g. 'What companies are at critical risk?'"
                 className="input-cosmic w-full pl-8 text-sm"
                 aria-label="Natural language risk query"
               />
@@ -99,7 +99,7 @@ export function QueryBar() {
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-cosmic-cyan animate-pulse" />
-                  <span className="text-xs font-mono text-cosmic-cyan uppercase tracking-wider">Oracle AI Response</span>
+                  <span className="text-xs font-mono text-cosmic-cyan uppercase tracking-wider">RiskLens AI Response</span>
                 </div>
                 <button
                   onClick={() => setIsModalOpen(false)}
@@ -148,3 +148,4 @@ export function QueryBar() {
     </>
   )
 }
+

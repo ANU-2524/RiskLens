@@ -1,4 +1,4 @@
-# Oracle — Complete Setup Guide
+# RiskLens — Complete Setup Guide
 
 ## 🚀 Quick Start (Recommended)
 
@@ -17,7 +17,7 @@ Optional but recommended:
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd oracle
+cd RiskLens
 
 # Copy environment template
 cp .env.example .env
@@ -56,18 +56,18 @@ docker-compose exec backend python -m app.db.seed
 This creates:
 - 25+ tracked entities (companies, countries, sectors)
 - 500+ historical signals demonstrating predictive capabilities
-- Risk scores showing Oracle flagging SVB, FTX, Evergrande before collapse
+- Risk scores showing RiskLens flagging SVB, FTX, Evergrande before collapse
 - 2 demo users (analyst and viewer roles)
 
-### Step 5: Access Oracle
+### Step 5: Access RiskLens
 
 Open your browser:
 
 **Frontend:** http://localhost:5173
 
 **Login credentials:**
-- **Analyst:** `demo@oracle.ai` / `oracle2024` (full access)
-- **Viewer:** `viewer@oracle.ai` / `viewer2024` (read-only)
+- **Analyst:** `demo@RiskLens.ai` / `RiskLens2024` (full access)
+- **Viewer:** `viewer@RiskLens.ai` / `viewer2024` (read-only)
 
 **API Documentation:** http://localhost:8000/docs
 
@@ -144,7 +144,7 @@ npm run dev
 - Use the search bar at the top
 - Try: "What companies in Asia are at high risk?"
 - Try: "Which crypto exchanges show elevated risk?"
-- Oracle will respond with AI-generated answers
+- RiskLens will respond with AI-generated answers
 
 ### 4. Dashboard
 - Navigate to Dashboard page
@@ -156,7 +156,7 @@ npm run dev
 - Navigate to Timeline page
 - Select an entity (e.g., "Silicon Valley Bank")
 - View 30-day risk score history
-- See how Oracle flagged risk before collapse
+- See how RiskLens flagged risk before collapse
 
 ### 6. PDF Reports
 - Navigate to Reports page
@@ -383,4 +383,5 @@ If you encounter issues:
 
 ---
 
-**Oracle** — Built for production, designed for impact.
+**RiskLens** — Built for production, designed for impact.
+

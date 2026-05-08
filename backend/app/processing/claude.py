@@ -14,7 +14,7 @@ logger = structlog.get_logger(__name__)
 # Simple in-memory rate limiter
 _call_timestamps: List[float] = []
 
-ORACLE_SYSTEM_PROMPT = """You are Oracle, an AI-powered global business risk intelligence system.
+RiskLens_SYSTEM_PROMPT = """You are RiskLens, an AI-powered global business risk intelligence system.
 Your role is to analyse risk signals for companies, countries, and sectors and provide
 clear, actionable intelligence to decision-makers at major corporations and financial institutions.
 
@@ -103,7 +103,7 @@ Respond with valid JSON only."""
         response = await client.messages.create(
             model=settings.claude_model,
             max_tokens=settings.claude_max_tokens,
-            system=ORACLE_SYSTEM_PROMPT,
+            system=RiskLens_SYSTEM_PROMPT,
             messages=[{"role": "user", "content": prompt}],
         )
 
@@ -173,7 +173,7 @@ If the data does not contain enough information to answer, say so clearly."""
         response = await client.messages.create(
             model=settings.claude_model,
             max_tokens=500,
-            system=ORACLE_SYSTEM_PROMPT,
+            system=RiskLens_SYSTEM_PROMPT,
             messages=[{"role": "user", "content": prompt}],
         )
         return response.content[0].text.strip()
@@ -233,7 +233,8 @@ def _fallback_summary(entity_name: str, risk_score: float) -> Dict[str, Any]:
 def _fallback_query_answer(question: str) -> str:
     """Fallback answer when Claude is unavailable."""
     return (
-        "Oracle AI query processing is currently unavailable. "
+        "RiskLens AI query processing is currently unavailable. "
         "Please check your API configuration and try again. "
         f"Your question was: '{question}'"
     )
+

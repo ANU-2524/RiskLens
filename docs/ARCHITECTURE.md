@@ -1,4 +1,4 @@
-# Oracle — System Architecture
+# RiskLens — System Architecture
 
 ## 🏗️ High-Level Architecture
 
@@ -261,7 +261,7 @@ Alert Created → Redis Pub/Sub → WebSocket Manager → All Connected Clients
 │  └──────────────┘  └──────────────┘  └──────────────┘     │
 │                                                              │
 │  Volumes: postgres_data, redis_data                         │
-│  Network: oracle_default (bridge)                           │
+│  Network: RiskLens_default (bridge)                           │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -360,3 +360,4 @@ GitHub Push → GitHub Actions
 - 500+ data points ingested per hour
 - Sub-200ms API response times
 - 99.9% uptime with proper deployment
+

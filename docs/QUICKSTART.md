@@ -1,6 +1,6 @@
-# 🚀 Oracle — 5-Minute Quickstart
+# 🚀 RiskLens — 5-Minute Quickstart
 
-Get Oracle running in 5 minutes with this streamlined guide.
+Get RiskLens running in 5 minutes with this streamlined guide.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ Get Oracle running in 5 minutes with this streamlined guide.
 ```bash
 # Clone the repo
 git clone <your-repo-url>
-cd oracle
+cd RiskLens
 
 # Copy environment file
 cp .env.example .env
@@ -56,8 +56,8 @@ This creates:
 Open your browser: **http://localhost:5173**
 
 **Login:**
-- Email: `demo@oracle.ai`
-- Password: `oracle2024`
+- Email: `demo@RiskLens.ai`
+- Password: `RiskLens2024`
 
 **Try these:**
 1. **Galaxy Map** — Click any star to see entity details
@@ -68,7 +68,7 @@ Open your browser: **http://localhost:5173**
 
 ## 🎯 What You're Seeing
 
-The demo data shows Oracle's predictive power:
+The demo data shows RiskLens's predictive power:
 
 - **SVB Bank:** Risk flagged CRITICAL 9 days before collapse (March 2023)
 - **FTX Exchange:** HIGH risk detected 8 days before bankruptcy (Nov 2022)
@@ -118,15 +118,15 @@ docker-compose up --build
 
 ## 🎤 Demo Script for Interviews
 
-> "Let me show you Oracle — an AI-powered risk intelligence platform I built. 
+> "Let me show you RiskLens — an AI-powered risk intelligence platform I built. 
 > 
 > [Show Galaxy Map] Each star represents a tracked entity. Size and color indicate risk level. This is real-time data from news feeds, SEC filings, and market signals.
 > 
-> [Click SVB star] Here's Silicon Valley Bank. Oracle flagged this as CRITICAL risk 9 days before the FDIC seizure in March 2023. The AI summary explains why — unrealized bond losses, unusual withdrawal patterns, VC advisor communications.
+> [Click SVB star] Here's Silicon Valley Bank. RiskLens flagged this as CRITICAL risk 9 days before the FDIC seizure in March 2023. The AI summary explains why — unrealized bond losses, unusual withdrawal patterns, VC advisor communications.
 > 
 > [Show Timeline] This chart shows how the risk score escalated over 3 weeks. Every spike corresponds to a real signal — a news article, an SEC filing, or market data.
 > 
-> [Use Query Bar] I can ask Oracle anything in natural language. 'What crypto exchanges show elevated risk?' [Show AI response]
+> [Use Query Bar] I can ask RiskLens anything in natural language. 'What crypto exchanges show elevated risk?' [Show AI response]
 > 
 > [Show Dashboard] The dashboard aggregates risk across sectors. Finance sector is elevated right now due to commercial real estate concerns.
 > 
@@ -136,4 +136,5 @@ docker-compose up --build
 
 ---
 
-**You're ready!** Oracle is now running locally. Explore the platform and review the code.
+**You're ready!** RiskLens is now running locally. Explore the platform and review the code.
+

@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Oracle cosmic palette — only these colours are permitted
+        // risklens cosmic palette — only these colours are permitted
         cosmic: {
           bg: '#050510',
           'bg-secondary': '#0a0a1a',
@@ -65,3 +65,4 @@ export default {
   },
   plugins: [],
 }
+

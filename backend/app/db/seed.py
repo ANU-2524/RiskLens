@@ -1,5 +1,5 @@
 """
-Database seeding script — pre-populates Oracle with realistic historical data
+Database seeding script — pre-populates RiskLens with realistic historical data
 demonstrating the platform's predictive capabilities for demo purposes.
 
 Covers: SVB collapse, Evergrande crisis, COVID supply chain, FTX collapse,
@@ -283,11 +283,11 @@ async def seed_database() -> None:
         all_summaries: List[dict] = []
 
         event_map = {
-            "Silicon Valley Bank": (_make_svb_signals, "SVB showed critical risk signals 3 weeks before collapse. Unrealised bond losses, unusual withdrawal patterns, and VC advisor communications all pointed to imminent failure. Oracle flagged CRITICAL status on March 1, 2023 — 9 days before FDIC seizure."),
-            "FTX Exchange": (_make_ftx_signals, "FTX exhibited classic pre-collapse patterns: circular token relationships, unusual withdrawal velocity, and social sentiment collapse. Oracle flagged HIGH risk when CoinDesk published the Alameda balance sheet — 8 days before bankruptcy filing."),
-            "Evergrande Group": (_make_evergrande_signals, "Evergrande's debt spiral was visible in SEC-equivalent filings and supplier payment delays months before default. Oracle detected systemic property sector stress and flagged CRITICAL status 6 weeks before the missed bond payment."),
-            "Global Supply Chain": (_make_covid_supply_chain_signals, "COVID supply chain disruption signals emerged in port congestion data and shipping cost indices weeks before retail shelves emptied. Oracle's cross-source correlation identified the risk pattern early."),
-            "Gazprom": (_make_russia_energy_signals, "Russia-Ukraine conflict energy impact was predictable from geopolitical signals and gas flow data. Oracle flagged European energy sector CRITICAL status within 48 hours of invasion, enabling early hedging."),
+            "Silicon Valley Bank": (_make_svb_signals, "SVB showed critical risk signals 3 weeks before collapse. Unrealised bond losses, unusual withdrawal patterns, and VC advisor communications all pointed to imminent failure. RiskLens flagged CRITICAL status on March 1, 2023 — 9 days before FDIC seizure."),
+            "FTX Exchange": (_make_ftx_signals, "FTX exhibited classic pre-collapse patterns: circular token relationships, unusual withdrawal velocity, and social sentiment collapse. RiskLens flagged HIGH risk when CoinDesk published the Alameda balance sheet — 8 days before bankruptcy filing."),
+            "Evergrande Group": (_make_evergrande_signals, "Evergrande's debt spiral was visible in SEC-equivalent filings and supplier payment delays months before default. RiskLens detected systemic property sector stress and flagged CRITICAL status 6 weeks before the missed bond payment."),
+            "Global Supply Chain": (_make_covid_supply_chain_signals, "COVID supply chain disruption signals emerged in port congestion data and shipping cost indices weeks before retail shelves emptied. RiskLens's cross-source correlation identified the risk pattern early."),
+            "Gazprom": (_make_russia_energy_signals, "Russia-Ukraine conflict energy impact was predictable from geopolitical signals and gas flow data. RiskLens flagged European energy sector CRITICAL status within 48 hours of invasion, enabling early hedging."),
         }
 
         for entity_name, (signal_fn, summary_text) in event_map.items():
@@ -306,7 +306,7 @@ async def seed_database() -> None:
                 all_alerts.append({
                     "entity_id": entity_id,
                     "severity": peak["severity"],
-                    "message": f"Oracle detected {peak['severity'].value} risk for {entity_name}. Score: {peak['score']:.1f}/100",
+                    "message": f"RiskLens detected {peak['severity'].value} risk for {entity_name}. Score: {peak['score']:.1f}/100",
                     "triggered_at": peak["computed_at"],
                     "acknowledged": True,
                 })
@@ -361,8 +361,8 @@ async def _create_users(session: AsyncSession) -> None:
         return
 
     users = [
-        User(email="demo@oracle.ai", hashed_password=hash_password("oracle2024"), role=UserRole.ANALYST),
-        User(email="viewer@oracle.ai", hashed_password=hash_password("viewer2024"), role=UserRole.VIEWER),
+        User(email="demo@RiskLens.ai", hashed_password=hash_password("RiskLens2024"), role=UserRole.ANALYST),
+        User(email="viewer@RiskLens.ai", hashed_password=hash_password("viewer2024"), role=UserRole.VIEWER),
     ]
     for user in users:
         session.add(user)
@@ -423,3 +423,4 @@ def _make_current_signals(entity_map: dict) -> List[dict]:
 
 if __name__ == "__main__":
     asyncio.run(seed_database())
+

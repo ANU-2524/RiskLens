@@ -1,5 +1,5 @@
 ═══════════════════════════════════════════════════════════════════════════════
-  ORACLE — AI-POWERED RISK INTELLIGENCE PLATFORM
+  RiskLens — AI-POWERED RISK INTELLIGENCE PLATFORM
   Complete Setup & Run Instructions
 ═══════════════════════════════════════════════════════════════════════════════
 
@@ -50,8 +50,8 @@ This will:
   ✓ Start React frontend
 
 Wait until you see:
-  ✓ "oracle-backend    | INFO:     Application startup complete"
-  ✓ "oracle-frontend   | VITE ... ready in ... ms"
+  ✓ "RiskLens-backend    | INFO:     Application startup complete"
+  ✓ "RiskLens-frontend   | VITE ... ready in ... ms"
 
 ──────────────────────────────────────────────────────────────────────────────
 STEP 3: Seed Demo Data
@@ -73,7 +73,7 @@ You should see:
   "Database seed complete"
 
 ──────────────────────────────────────────────────────────────────────────────
-STEP 4: Access Oracle
+STEP 4: Access RiskLens
 ──────────────────────────────────────────────────────────────────────────────
 
 Open your web browser and go to:
@@ -81,11 +81,11 @@ Open your web browser and go to:
   http://localhost:5173
 
 Login with:
-  Email:    demo@oracle.ai
-  Password: oracle2024
+  Email:    demo@RiskLens.ai
+  Password: RiskLens2024
 
 Alternative login (read-only):
-  Email:    viewer@oracle.ai
+  Email:    viewer@RiskLens.ai
   Password: viewer2024
 
 ═══════════════════════════════════════════════════════════════════════════════
@@ -114,7 +114,7 @@ Alternative login (read-only):
 5. TIMELINE EXPLORER (Navigation menu)
    - Select "Silicon Valley Bank"
    - View 30-day risk score history
-   - See how Oracle flagged risk before collapse
+   - See how RiskLens flagged risk before collapse
 
 6. PDF REPORTS (Navigation menu)
    - Select any entity
@@ -209,7 +209,7 @@ Before your demo, verify:
   [ ] docker-compose up runs without errors
   [ ] Seed command completes successfully
   [ ] Frontend loads at http://localhost:5173
-  [ ] Can login with demo@oracle.ai / oracle2024
+  [ ] Can login with demo@RiskLens.ai / RiskLens2024
   [ ] Galaxy Map shows ~25 stars
   [ ] Can click a star and see entity details
   [ ] Natural language query returns AI response
@@ -221,10 +221,11 @@ Before your demo, verify:
 
 🎉 YOU'RE READY!
 
-Oracle is now running locally. Explore the platform, review the code, and
+RiskLens is now running locally. Explore the platform, review the code, and
 prepare your demo narrative.
 
 For questions or issues, check the troubleshooting section above or review
 the documentation files.
 
 ═══════════════════════════════════════════════════════════════════════════════
+

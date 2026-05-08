@@ -1,5 +1,5 @@
 {
-  "name": "oracle-frontend",
+  "name": "RiskLens-frontend",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -46,3 +46,4 @@
     "vite": "^5.3.1"
   }
 }
+

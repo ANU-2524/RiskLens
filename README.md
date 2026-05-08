@@ -1,6 +1,6 @@
-# Mysterious — AI-Powered Global Business Risk Intelligence Platform...
+# RiskLens — AI-Powered Global Business Risk Intelligence Platform...
 
-![Oracle Banner](https://img.shields.io/badge/Oracle-Risk%20Intelligence-00D4FF?style=for-the-badge)
+![RiskLens Banner](https://img.shields.io/badge/RiskLens-Risk%20Intelligence-00D4FF?style=for-the-badge)
 ![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.111-009688?style=flat-square)
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square)
@@ -10,11 +10,11 @@
 
 Every major corporate disaster of the last decade — **Enron, Lehman Brothers, SVB, FTX, Evergrande** — had publicly available warning signals weeks or months before collapse. Analysts missed them because they were buried across thousands of documents, feeds, and data sources that no human team could monitor simultaneously.
 
-**Oracle fixes this.**
+**RiskLens fixes this.**
 
-## What Oracle Does
+## What RiskLens Does
 
-Oracle is a production-grade, AI-powered early warning system that monitors global business risk in real time. It:
+RiskLens is a production-grade, AI-powered early warning system that monitors global business risk in real time. It:
 
 - **Ingests 500+ data points per hour** from news feeds, SEC filings, market data, and social signals
 - **Uses NLP** to extract entities and sentiment
@@ -35,7 +35,7 @@ Oracle is a production-grade, AI-powered early warning system that monitors glob
 
 ```bash
 git clone <your-repo-url>
-cd oracle
+cd RiskLens
 
 # Copy environment template
 cp .env.example .env
@@ -66,7 +66,7 @@ In a new terminal:
 docker-compose exec backend python -m app.db.seed
 ```
 
-This populates the database with realistic historical data demonstrating Oracle's predictive capabilities for:
+This populates the database with realistic historical data demonstrating RiskLens's predictive capabilities for:
 - **SVB Bank collapse** (March 2023)
 - **FTX crypto collapse** (November 2022)
 - **Evergrande debt crisis** (2021)
@@ -78,8 +78,8 @@ This populates the database with realistic historical data demonstrating Oracle'
 - **Frontend:** http://localhost:5173
 - **API Docs:** http://localhost:8000/docs
 - **Login:**
-  - Analyst: `demo@oracle.ai` / `oracle2024`
-  - Viewer: `viewer@oracle.ai` / `viewer2024`
+  - Analyst: `demo@RiskLens.ai` / `RiskLens2024`
+  - Viewer: `viewer@RiskLens.ai` / `viewer2024`
 
 ## Features
 
@@ -102,7 +102,7 @@ This populates the database with realistic historical data demonstrating Oracle'
 - Compare multiple entities side-by-side
 
 ### Natural Language Query
-- Ask Oracle anything: "What companies in Asia are at high risk?"
+- Ask RiskLens anything: "What companies in Asia are at high risk?"
 - Claude-powered AI responses grounded in live data
 - Query history tracking
 
@@ -119,7 +119,7 @@ This populates the database with realistic historical data demonstrating Oracle'
 ## Architecture
 
 ```
-oracle/
+RiskLens/
 ├── backend/              # FastAPI + Python
 │   ├── app/
 │   │   ├── api/         # REST API routes
@@ -141,9 +141,9 @@ oracle/
 
 ## AI Integration
 
-Oracle uses **Claude 3.5 Sonnet** for:
+RiskLens uses **Claude 3.5 Sonnet** for:
 
-1. **Risk Summaries:** When an entity crosses the 60/100 risk threshold, Oracle sends:
+1. **Risk Summaries:** When an entity crosses the 60/100 risk threshold, RiskLens sends:
    - Entity context (name, type, sector)
    - Recent signals (news, filings, market data)
    - Computed risk score
@@ -247,7 +247,7 @@ Use managed Redis 7+ for caching and Celery broker.
 
 ## Narrative
 
-> "This is the system I built to solve a $100B problem. Every major corporate disaster — SVB, FTX, Evergrande — had publicly available warning signals weeks before collapse. Oracle ingests 500+ data points per hour from news, SEC filings, market data, and social signals. It uses NLP to extract entities and sentiment, runs anomaly detection on financial patterns, and sends risk clusters to Claude API which generates plain-English summaries.
+> "This is the system I built to solve a $100B problem. Every major corporate disaster — SVB, FTX, Evergrande — had publicly available warning signals weeks before collapse. RiskLens ingests 500+ data points per hour from news, SEC filings, market data, and social signals. It uses NLP to extract entities and sentiment, runs anomaly detection on financial patterns, and sends risk clusters to Claude API which generates plain-English summaries.
 >
 > The result: a real-time intelligence platform that would have flagged SVB's risk 3 weeks before collapse, spotted FTX's unusual withdrawal patterns, and alerted supply chain managers to COVID disruptions before their shelves went empty.
 >
@@ -269,4 +269,5 @@ Built with:
 - Github pages only used to deploy frontend, not backend.
 - SEC filing: an official document that a company submits to the U.S. Securities and Exchange Commission to report its financial and business information.
 
-**Mysterious** — Seeing risk before it becomes crisis.
+**RiskLens** — Seeing risk before it becomes crisis.
+

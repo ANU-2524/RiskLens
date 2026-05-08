@@ -16,7 +16,7 @@ router = APIRouter(tags=["websocket"])
 # Active WebSocket connections
 _connections: Set[WebSocket] = set()
 
-REDIS_CHANNEL = "oracle:live_alerts"
+REDIS_CHANNEL = "RiskLens:live_alerts"
 
 
 class ConnectionManager:
@@ -70,7 +70,7 @@ async def live_risk_feed(websocket: WebSocket) -> None:
         await websocket.send_text(
             json.dumps({
                 "type": "connected",
-                "message": "Oracle live feed connected",
+                "message": "RiskLens live feed connected",
                 "connections": len(manager.active_connections),
             })
         )
@@ -112,3 +112,4 @@ async def publish_alert(alert_data: dict) -> None:
         await redis.publish(REDIS_CHANNEL, json.dumps(alert_data))
     except Exception as exc:
         logger.error("Failed to publish alert to Redis", error=str(exc))
+

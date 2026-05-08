@@ -22,7 +22,7 @@ export function ReportsPage() {
       // Header
       doc.setFontSize(20)
       doc.setTextColor(0, 212, 255)
-      doc.text('Oracle Risk Intelligence Report', 14, 20)
+      doc.text('RiskLens Risk Intelligence Report', 14, 20)
 
       doc.setFontSize(10)
       doc.setTextColor(100, 100, 100)
@@ -119,14 +119,14 @@ export function ReportsPage() {
         doc.setFontSize(8)
         doc.setTextColor(150, 150, 150)
         doc.text(
-          `Oracle Risk Intelligence Platform | Page ${i} of ${pageCount}`,
+          `RiskLens Risk Intelligence Platform | Page ${i} of ${pageCount}`,
           pageWidth / 2,
           doc.internal.pageSize.getHeight() - 10,
           { align: 'center' }
         )
       }
 
-      doc.save(`oracle-report-${entity.name.replace(/\s+/g, '-')}-${Date.now()}.pdf`)
+      doc.save(`RiskLens-report-${entity.name.replace(/\s+/g, '-')}-${Date.now()}.pdf`)
     } finally {
       setIsGenerating(false)
     }
@@ -208,3 +208,4 @@ export function ReportsPage() {
     </div>
   )
 }
+

@@ -13,6 +13,6 @@
     "type": "runCommand",
     "command": "cd backend && ruff check ${file} && mypy ${file}"
   },
-  "workspaceFolderName": "Mysterious",
+  "workspaceFolderName": "RiskLens",
   "shortName": "python-lint-on-save"
 }

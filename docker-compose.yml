@@ -4,17 +4,17 @@ services:
   # PostgreSQL database
   postgres:
     image: postgres:15-alpine
-    container_name: oracle-postgres
+    container_name: RiskLens-postgres
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-oracle}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-oracle}
-      POSTGRES_DB: ${POSTGRES_DB:-oracle_db}
+      POSTGRES_USER: ${POSTGRES_USER:-RiskLens}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-RiskLens}
+      POSTGRES_DB: ${POSTGRES_DB:-RiskLens_db}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U oracle"]
+      test: ["CMD-SHELL", "pg_isready -U RiskLens"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -22,7 +22,7 @@ services:
   # Redis cache and message broker
   redis:
     image: redis:7-alpine
-    container_name: oracle-redis
+    container_name: RiskLens-redis
     ports:
       - "6379:6379"
     volumes:
@@ -36,7 +36,7 @@ services:
   # Qdrant Vector Database
   qdrant:
     image: qdrant/qdrant:latest
-    container_name: oracle-qdrant
+    container_name: RiskLens-qdrant
     ports:
       - "6333:6333"
       - "6334:6334"
@@ -53,9 +53,9 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: oracle-backend
+    container_name: RiskLens-backend
     environment:
-      DATABASE_URL: postgresql+asyncpg://oracle:oracle@postgres:5432/oracle_db
+      DATABASE_URL: postgresql+asyncpg://RiskLens:RiskLens@postgres:5432/RiskLens_db
       REDIS_URL: redis://redis:6379/0
       CELERY_BROKER_URL: redis://redis:6379/1
       CELERY_RESULT_BACKEND: redis://redis:6379/2
@@ -82,9 +82,9 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: oracle-celery-worker
+    container_name: RiskLens-celery-worker
     environment:
-      DATABASE_URL: postgresql+asyncpg://oracle:oracle@postgres:5432/oracle_db
+      DATABASE_URL: postgresql+asyncpg://RiskLens:RiskLens@postgres:5432/RiskLens_db
       REDIS_URL: redis://redis:6379/0
       CELERY_BROKER_URL: redis://redis:6379/1
       CELERY_RESULT_BACKEND: redis://redis:6379/2
@@ -104,9 +104,9 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: oracle-celery-beat
+    container_name: RiskLens-celery-beat
     environment:
-      DATABASE_URL: postgresql+asyncpg://oracle:oracle@postgres:5432/oracle_db
+      DATABASE_URL: postgresql+asyncpg://RiskLens:RiskLens@postgres:5432/RiskLens_db
       REDIS_URL: redis://redis:6379/0
       CELERY_BROKER_URL: redis://redis:6379/1
       CELERY_RESULT_BACKEND: redis://redis:6379/2
@@ -126,7 +126,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: oracle-frontend
+    container_name: RiskLens-frontend
     ports:
       - "5155:5173"
     volumes:
@@ -140,3 +140,4 @@ volumes:
   postgres_data:
   redis_data:
   qdrant_data:
+

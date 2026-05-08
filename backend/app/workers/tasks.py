@@ -1,4 +1,4 @@
-"""Celery background tasks for Oracle data ingestion pipeline."""
+"""Celery background tasks for RiskLens data ingestion pipeline."""
 
 import asyncio
 from typing import Any
@@ -12,7 +12,7 @@ from app.core.config import settings
 logger = structlog.get_logger(__name__)
 
 celery_app = Celery(
-    "oracle",
+    "RiskLens",
     broker=settings.celery_broker_url,
     backend=settings.celery_result_backend,
 )
@@ -377,3 +377,4 @@ def compute_risk_scores_task(self: Any) -> dict:
     except Exception as exc:
         logger.error("Risk score task failed", error=str(exc))
         raise self.retry(exc=exc, countdown=60)
+

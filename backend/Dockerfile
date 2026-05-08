@@ -20,8 +20,8 @@ RUN python -m spacy download en_core_web_sm
 COPY . .
 
 # Create non-root user
-RUN useradd -m -u 1000 oracle && chown -R oracle:oracle /app
-USER oracle
+RUN useradd -m -u 1000 risklens && chown -R risklens:risklens /app
+USER risklens
 
 EXPOSE 8000
 
@@ -30,3 +30,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+

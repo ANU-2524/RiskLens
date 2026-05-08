@@ -2,7 +2,7 @@
 
 ## ✅ Changes Applied
 
-The Oracle platform has been reconfigured to run on **port 5155** instead of the default 5173.
+The RiskLens platform has been reconfigured to run on **port 5155** instead of the default 5173.
 
 ### Files Modified
 
@@ -41,7 +41,7 @@ docker-compose up --build
 docker-compose exec backend python -m app.db.seed
 
 # 4. Access at http://localhost:5155
-# Login: demo@oracle.ai / oracle2024
+# Login: demo@RiskLens.ai / RiskLens2024
 ```
 
 ## ✅ What Still Works
@@ -90,3 +90,4 @@ All documentation files have been updated where necessary:
 The platform is ready to run on port 5155. Just follow the commands above and you'll be up and running in 5 minutes.
 
 **Quick Reference:** See QUICK_REFERENCE.txt for all URLs and commands.
+

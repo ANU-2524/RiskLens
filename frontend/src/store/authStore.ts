@@ -18,6 +18,7 @@ export const useAuthStore = create<AuthState>()(
       setAuth: (token, email, role) => set({ token, email, role }),
       clearAuth: () => set({ token: null, email: null, role: null }),
     }),
-    { name: 'oracle-auth' },
+    { name: 'RiskLens-auth' },
   ),
 )
+

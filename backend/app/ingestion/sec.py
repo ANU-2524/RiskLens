@@ -1,4 +1,4 @@
-"""SEC EDGAR filing ingestion for Oracle."""
+"""SEC EDGAR filing ingestion for RiskLens."""
 
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
@@ -76,7 +76,7 @@ async def fetch_recent_filings(
     try:
         async with httpx.AsyncClient(
             timeout=20.0,
-            headers={"User-Agent": "Oracle Risk Intelligence oracle@example.com"},
+            headers={"User-Agent": "RiskLens Risk Intelligence RiskLens@example.com"},
         ) as client:
             response = await client.get(url)
             response.raise_for_status()
@@ -123,3 +123,4 @@ async def fetch_recent_filings(
 
     logger.info("SEC filings ingested", count=len(filings))
     return filings
+

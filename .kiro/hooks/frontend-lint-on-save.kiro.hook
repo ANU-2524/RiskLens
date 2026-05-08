@@ -14,6 +14,6 @@
     "type": "runCommand",
     "command": "cd frontend && npm run lint"
   },
-  "workspaceFolderName": "Mysterious",
+  "workspaceFolderName": "RiskLens",
   "shortName": "frontend-lint-on-save"
 }

@@ -1,4 +1,4 @@
-"""Oracle FastAPI application entry point."""
+"""RiskLens FastAPI application entry point."""
 
 import structlog
 from fastapi import FastAPI, Request, status
@@ -19,7 +19,7 @@ logger = structlog.get_logger(__name__)
 limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI(
-    title="Oracle — Risk Intelligence Platform",
+    title="RiskLens — Risk Intelligence Platform",
     description=(
         "AI-powered global business risk intelligence. "
         "Monitors news, SEC filings, market data, and social signals "
@@ -52,12 +52,12 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup() -> None:
     """Initialise database tables and Redis on startup."""
-    logger.info("Oracle starting up", environment=settings.environment)
+    logger.info("RiskLens starting up", environment=settings.environment)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     # Warm up Redis connection
     await get_redis()
-    logger.info("Oracle startup complete")
+    logger.info("RiskLens startup complete")
 
 
 @app.on_event("shutdown")
@@ -65,7 +65,7 @@ async def shutdown() -> None:
     """Clean up connections on shutdown."""
     await close_redis()
     await engine.dispose()
-    logger.info("Oracle shutdown complete")
+    logger.info("RiskLens shutdown complete")
 
 
 # ---------------------------------------------------------------------------
@@ -107,4 +107,5 @@ app.include_router(websocket.router, prefix=API_PREFIX)
 @app.get("/health", tags=["health"])
 async def health_check() -> dict:
     """Return service health status."""
-    return {"status": "healthy", "service": "oracle", "version": "1.0.0"}
+    return {"status": "healthy", "service": "RiskLens", "version": "1.0.0"}
+

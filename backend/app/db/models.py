@@ -1,4 +1,4 @@
-"""SQLAlchemy ORM models for Oracle platform."""
+"""SQLAlchemy ORM models for RiskLens platform."""
 
 import enum
 from datetime import datetime
@@ -268,3 +268,4 @@ class Watchlist(Base):
     __table_args__ = (
         Index("ix_watchlists_user_entity", "user_id", "entity_id", unique=True),
     )
+

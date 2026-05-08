@@ -1,4 +1,4 @@
-# Oracle — Agent Steering Rules
+# RiskLens — Agent Steering Rules
 
 ## Code style
 - Python: PEP8, type hints on all functions, docstrings on all public methods
@@ -13,7 +13,7 @@
 - All new API routes must have a corresponding pytest test
 
 ## AI integration rules
-- Claude API calls must always include a system prompt establishing the Oracle context
+- Claude API calls must always include a system prompt establishing the RiskLens context
 - All AI-generated content stored with the prompt used to generate it (audit trail)
 - Token budget per Claude call: max 2000 output tokens
 - Rate limit Claude calls: max 50/hour to control costs
@@ -23,3 +23,4 @@
 - Three.js scene must not exceed 60MB GPU memory
 - All API calls use React Query — no raw fetch() in components
 - Mobile breakpoint at 768px: galaxy map replaced with card grid
+

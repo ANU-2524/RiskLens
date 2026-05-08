@@ -2,7 +2,7 @@
 
 ## Current Port Setup
 
-Oracle is configured to run on the following ports:
+RiskLens is configured to run on the following ports:
 
 - **Frontend:** http://localhost:5155 (React/Vite)
 - **Backend API:** http://localhost:8000 (FastAPI)
@@ -40,8 +40,8 @@ docker-compose exec backend python -m app.db.seed
 
 ## Login Credentials
 
-- **Analyst:** demo@oracle.ai / oracle2024
-- **Viewer:** viewer@oracle.ai / viewer2024
+- **Analyst:** demo@RiskLens.ai / RiskLens2024
+- **Viewer:** viewer@RiskLens.ai / viewer2024
 
 ## Verify Everything Works
 
@@ -87,3 +87,4 @@ netstat -ano | findstr :5155  # Windows
 **CORS errors:**
 - Make sure CORS_ORIGINS in `.env` includes your frontend URL
 - Restart backend after changing CORS settings
+

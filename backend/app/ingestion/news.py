@@ -1,4 +1,4 @@
-"""RSS news feed ingestion for Oracle."""
+"""RSS news feed ingestion for RiskLens."""
 
 import asyncio
 from datetime import datetime, timezone
@@ -134,3 +134,4 @@ async def ingest_all_feeds() -> List[NewsArticle]:
 
     logger.info("News ingestion complete", total_articles=len(enriched))
     return enriched
+

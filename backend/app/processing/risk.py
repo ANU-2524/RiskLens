@@ -11,7 +11,7 @@ def compute_risk_score(
     price_volatility: float,
 ) -> float:
     """
-    Compute a risk score 0–100 using the Oracle formula.
+    Compute a risk score 0–100 using the RiskLens formula.
 
     Formula: (|sentiment_delta| × 0.4) + (volume_anomaly × 0.3) + (price_volatility × 0.3)
     All inputs are normalised to [0, 1] before weighting.
@@ -77,3 +77,4 @@ def compute_price_volatility(
     Returns 0–1 based on how far the price moved relative to a threshold.
     """
     return min(abs(price_change_pct) / (threshold_pct * 2), 1.0)
+

@@ -1,4 +1,4 @@
-# Oracle — Project Summary
+# RiskLens — Project Summary
 
 ## ✅ Project Status: COMPLETE
 
@@ -94,7 +94,7 @@ All components have been built and are ready to run.
 ```bash
 # 1. Clone and configure
 git clone <repo-url>
-cd oracle
+cd RiskLens
 cp .env.example .env
 
 # 2. Start everything
@@ -105,7 +105,7 @@ docker-compose exec backend python -m app.db.seed
 
 # 4. Open browser
 # http://localhost:5173
-# Login: demo@oracle.ai / oracle2024
+# Login: demo@RiskLens.ai / RiskLens2024
 ```
 
 See **QUICKSTART.md** for detailed instructions.
@@ -188,7 +188,7 @@ See **QUICKSTART.md** for detailed instructions.
 ## 📁 Project Structure
 
 ```
-oracle/
+RiskLens/
 ├── backend/                 # FastAPI Python backend
 │   ├── app/
 │   │   ├── api/            # REST API routes
@@ -290,7 +290,7 @@ All original requirements satisfied:
 
 ## 🏆 Project Complete
 
-**Oracle is production-ready and demo-ready.**
+**RiskLens is production-ready and demo-ready.**
 
 All code is written, tested, and documented. The platform can be started with a single command and demonstrates sophisticated full-stack engineering, AI integration, and product thinking.
 
@@ -303,3 +303,4 @@ All code is written, tested, and documented. The platform can be started with a 
 6. Prepare your demo narrative
 
 **You're ready to impress KPMG, Google, Walmart, and Morgan Stanley.** 🚀
+

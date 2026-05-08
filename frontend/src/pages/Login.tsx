@@ -140,10 +140,11 @@ export function LoginPage() {
         <div className="mt-6 pt-6 border-t border-cosmic-border">
           <p className="text-xs text-cosmic-text-muted text-center mb-2">Demo Credentials:</p>
           <div className="space-y-1 text-xs text-cosmic-text-secondary italic opacity-70">
-            <p>demo@oracle.ai / oracle2024</p>
+            <p>demo@RiskLens.ai / RiskLens2024</p>
           </div>
         </div>
       </div>
     </div>
   )
 }
+
