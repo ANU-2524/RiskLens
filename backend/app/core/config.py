@@ -39,6 +39,10 @@ class Settings(BaseSettings):
     claude_max_tokens: int = 2000
     claude_rate_limit_per_hour: int = 50
 
+    # Gemini API
+    google_api_key: str = ""
+    gemini_model: str = "gemini-3-flash-preview"
+
     # Market Data
     alpha_vantage_api_key: str = ""
 

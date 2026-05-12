@@ -1,4 +1,4 @@
-"""Claude API integration for AI-powered risk summaries."""
+"""Gemini API integration for AI-powered risk summaries (previously Claude)."""
 
 import json
 import time
@@ -24,7 +24,7 @@ that drove your assessment."""
 
 
 def _check_rate_limit() -> bool:
-    """Return True if we are within the hourly Claude call limit."""
+    """Return True if we are within the hourly Gemini call limit."""
     now = time.time()
     cutoff = now - 3600  # 1 hour window
     global _call_timestamps
@@ -33,7 +33,7 @@ def _check_rate_limit() -> bool:
 
 
 def _record_call() -> None:
-    """Record a Claude API call timestamp."""
+    """Record a Gemini API call timestamp."""
     _call_timestamps.append(time.time())
 
 
@@ -50,23 +50,27 @@ async def generate_risk_summary(
     sector: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
-    Call Claude API to generate a structured risk summary for a high-risk entity.
+    Call Gemini API to generate a structured risk summary for a high-risk entity.
 
     Returns a dict with: summary_text, severity, contributing_signals, recommended_action, prompt_used.
     """
     if not _check_rate_limit():
-        logger.warning("Claude rate limit reached, skipping AI summary", entity=entity_name)
+        logger.warning("Gemini rate limit reached, skipping AI summary", entity=entity_name)
         return _fallback_summary(entity_name, risk_score)
 
-    if not settings.anthropic_api_key:
-        logger.warning("No Anthropic API key configured, using fallback summary")
+    if not settings.google_api_key:
+        logger.warning("No Google API key configured, using fallback summary")
         return _fallback_summary(entity_name, risk_score)
 
     try:
-        import anthropic
-        client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
+        import google.generativeai as genai
+        genai.configure(api_key=settings.google_api_key)
+        model = genai.GenerativeModel(
+            model_name=settings.gemini_model,
+            system_instruction=RiskLens_SYSTEM_PROMPT
+        )
     except ImportError:
-        logger.error("anthropic package not installed")
+        logger.error("google-generativeai package not installed")
         return _fallback_summary(entity_name, risk_score)
 
     # Build signal context
@@ -100,19 +104,22 @@ Respond with valid JSON only."""
     _record_call()
 
     try:
-        response = await client.messages.create(
-            model=settings.claude_model,
-            max_tokens=settings.claude_max_tokens,
-            system=RiskLens_SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": prompt}],
+        response = await model.generate_content_async(
+            prompt,
+            generation_config=genai.types.GenerationConfig(
+                max_output_tokens=settings.claude_max_tokens,
+                temperature=0.1,
+            )
         )
 
-        content = response.content[0].text.strip()
+        content = response.text.strip()
         # Strip markdown code fences if present
         if content.startswith("```"):
             content = content.split("```")[1]
             if content.startswith("json"):
                 content = content[4:]
+            if content.endswith("```"):
+                 content = content[:-3]
 
         parsed = json.loads(content)
         return {
@@ -124,11 +131,11 @@ Respond with valid JSON only."""
         }
 
     except json.JSONDecodeError as exc:
-        logger.error("Failed to parse Claude JSON response", error=str(exc))
+        logger.error("Failed to parse Gemini JSON response", error=str(exc))
         return _fallback_summary(entity_name, risk_score)
     except Exception as exc:
-        logger.error("Claude API call failed", error=str(exc))
-        raise
+        logger.error("Gemini API call failed", error=str(exc))
+        return _fallback_summary(entity_name, risk_score)
 
 
 @retry(
@@ -141,19 +148,23 @@ async def answer_natural_language_query(
     context: str,
 ) -> str:
     """
-    Answer a natural language risk intelligence question using Claude.
+    Answer a natural language risk intelligence question using Gemini.
 
     Returns a plain-text answer string.
     """
     if not _check_rate_limit():
         return "Rate limit reached. Please try again in a few minutes."
 
-    if not settings.anthropic_api_key:
+    if not settings.google_api_key:
         return _fallback_query_answer(question)
 
     try:
-        import anthropic
-        client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
+        import google.generativeai as genai
+        genai.configure(api_key=settings.google_api_key)
+        model = genai.GenerativeModel(
+            model_name=settings.gemini_model,
+            system_instruction=RiskLens_SYSTEM_PROMPT
+        )
     except ImportError:
         return _fallback_query_answer(question)
 
@@ -170,20 +181,21 @@ If the data does not contain enough information to answer, say so clearly."""
     _record_call()
 
     try:
-        response = await client.messages.create(
-            model=settings.claude_model,
-            max_tokens=500,
-            system=RiskLens_SYSTEM_PROMPT,
-            messages=[{"role": "user", "content": prompt}],
+        response = await model.generate_content_async(
+            prompt,
+            generation_config=genai.types.GenerationConfig(
+                max_output_tokens=500,
+                temperature=0.1,
+            )
         )
-        return response.content[0].text.strip()
+        return response.text.strip()
     except Exception as exc:
-        logger.error("Claude query failed", error=str(exc))
+        logger.error("Gemini query failed", error=str(exc))
         return f"Unable to process query at this time. Error: {str(exc)}"
 
 
 def _fallback_summary(entity_name: str, risk_score: float) -> Dict[str, Any]:
-    """Generate a rule-based fallback summary when Claude is unavailable."""
+    """Generate a rule-based fallback summary when AI is unavailable."""
     if risk_score >= 80:
         severity = "CRITICAL"
         summary = (
