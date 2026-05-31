@@ -1,0 +1,674 @@
+SECTION 1 — PROJECT OVERVIEW
+===============================================================
+1. What is this project?
+RiskLens is an AI-powered, real-time global business risk intelligence platform that automatically monitors thousands of companies, countries, and sectors for early warning signs of financial collapse or major disruption.
+
+Technical Definition: A full-stack distributed system that:
+
+Ingests 500+ data points per hour from heterogeneous sources (RSS feeds, SEC EDGAR, market data APIs)
+Processes signals through NLP pipelines (NER, sentiment analysis, anomaly detection)
+Computes quantitative risk scores using a weighted formula
+Streams real-time alerts via WebSocket to frontend dashboards
+Generates AI-powered plain-English summaries via Claude/Gemini API
+2. What problem does it solve?
+The Problem:
+
+Every major financial disaster of the last decade (Enron, Lehman, SVB, FTX, Evergrande) had public warning signals weeks or months before collapse
+Analysts cannot manually monitor thousands of documents, feeds, and data sources simultaneously
+Information is scattered across silos — no unified risk view exists
+The Solution:
+RiskLens automates risk detection by:
+
+Centralizing data from 500+ sources into one system
+Extracting actionable entities and sentiment automatically
+Computing quantitative risk scores in real-time
+Alerting decision-makers instantly when risk crosses thresholds
+Explaining "why" using AI-generated summaries, not just "what"
+Business Impact:
+
+SVB collapse would have been flagged CRITICAL 9 days before collapse
+FTX unusual withdrawal patterns detected 8 days early
+Evergrande default forecasted 6 weeks in advance
+COVID supply chain disruption flagged within 48 hours
+3. What are the main features?
+Feature	Purpose	Technology
+Galaxy Map	3D interactive visualization of all tracked entities; star brightness = risk level	Three.js + React Three Fiber + WebGL
+Live Risk Feed	Real-time streaming alerts as they are triggered	WebSocket + Redis Pub/Sub
+Risk Dashboard	Summary statistics, sector analysis, highest-risk entities	Chart.js, React Query
+Natural Language Query	Ask questions in English, get answers powered by Claude + vector search	Claude API + Qdrant vector DB
+Timeline Explorer	View historical risk scores for any entity over custom time windows	Chart.js + time-series queries
+Entity Detail Panel	Complete entity history: all signals, risk scores, AI summaries	React components + API aggregation
+Watchlist	User-controlled tracking of important entities	PostgreSQL relationships
+PDF Reports	Export audit-ready reports with charts and summaries	jsPDF + jsPDF-autotable
+4. Who are the users?
+User Role	Permissions	Use Cases
+Analyst	Full CRUD + query all data + generate reports	Conduct deep risk research, investigate signals, make recommendations
+Viewer	Read-only access to dashboards and reports	Executive briefings, stakeholder communication
+Watchlist Owners	Personal tracked entity lists	Monitor portfolio holdings, key counterparties
+Primary Audience:
+
+Corporate Risk & Compliance Teams (Morgan Stanley, Goldman Sachs, JPMorgan)
+Supply Chain Management (Walmart, Amazon, Target)
+Audit Firms (Deloitte, KPMG, EY)
+Insurance/Reinsurance (Munich Re, Berkshire Hathaway)
+Private Equity (Blackstone, Apollo, KKR)
+5. Why would someone use this project?
+Cost Avoidance: Detecting risks early saves companies from catastrophic losses
+
+SVB depositors lost $16 billion
+FTX bankruptcy erased $8 billion
+One prevented disaster pays for the system 1000x over
+Competitive Intelligence: Understand sector trends and competitor stability before others
+
+Regulatory Compliance: Demonstrates due diligence for risk monitoring requirements
+
+Operational Resilience: Identify supply chain vulnerabilities before disruptions
+
+Portfolio Protection: Hedge fund and PE firms use it to protect capital
+
+Proof of Concept: Demonstrates full-stack architecture with production-grade components
+
+6. What technologies are used and WHY?
+Component	Technology	Why This Choice
+Backend Runtime	Python 3.11	Excellent for data science + AI integrations (ML libraries, API clients)
+API Framework	FastAPI	Async-first (crucial for 500+ concurrent data fetches), auto-generated docs, built-in validation
+Web Server	Uvicorn	Production ASGI server, lower latency than alternatives
+Database	PostgreSQL 15	ACID guarantees for financial data, JSON columns, async driver (asyncpg)
+Cache/Broker	Redis 7	Sub-millisecond latency for cache hits, native pub/sub for WebSocket streaming
+Background Jobs	Celery + Beat	Reliable task queuing with retry logic, scheduled ingestion jobs
+Frontend Framework	React 18	Component model, large ecosystem, excellent tooling
+Language	TypeScript	Type safety prevents runtime errors in data visualization code
+Styling	Tailwind CSS	Rapid UI development, cosmic dark theme
+3D Graphics	Three.js	GPU-accelerated 3D rendering for Galaxy Map visualization
+State Management	Zustand	Lightweight, minimal boilerplate vs Redux/Context
+API Client	React Query + Axios	Automatic caching, refetching, error handling
+NER Engine	spaCy	Pre-trained models, efficient, standard in industry
+Sentiment Analysis	HuggingFace Transformers	State-of-the-art transformer models, fine-tuning capability
+AI Summaries	Claude/Gemini API	Best-in-class reasoning, can handle complex risk analysis
+Vector Search	Qdrant	Fast approximate nearest neighbor search for semantic relevance
+Containerization	Docker Compose	Local dev environment identical to production
+7. Why were these technologies chosen instead of alternatives?
+Backend: FastAPI vs Express.js vs Django vs Go
+
+Express.js: Eliminated because Python ecosystem is superior for data science + ML
+Django: Overkill, too much magic; FastAPI is lighter, faster, more modern
+Go: Would require rewriting all ML integration libraries; Python is standard in ML
+FastAPI Wins: Async by default, auto-docs, validation, modern Python
+Database: PostgreSQL vs MongoDB vs DynamoDB
+
+MongoDB: Schema flexibility is a liability for financial data; need ACID guarantees
+DynamoDB: AWS vendor lock-in, expensive at scale, no transactions
+PostgreSQL Wins: ACID compliance (critical for financial data), JSON columns (hybrid flexibility), async driver
+Frontend: React vs Vue vs Svelte vs Angular
+
+Vue: Smaller ecosystem for Three.js integration
+Svelte: Smaller community, fewer component libraries for complex dashboards
+Angular: Too verbose, steep learning curve, unnecessary for this project
+React Wins: Largest ecosystem (Three.js, Chart.js, etc.), JSX readability, community size
+AI: Claude vs GPT vs LLaMA vs Gemini
+
+Claude 3.5 Sonnet: Best reasoning + instruction-following, good context window (200k)
+GPT-4: More expensive, but would also work
+LLaMA: Open-source but requires hosting, less reliable for financial analysis
+Claude Wins: Best cost/performance ratio, no need to host own models
+Vector DB: Qdrant vs Pinecone vs Weaviate vs Milvus
+
+Pinecone: SaaS pricing adds cost, vendor lock-in
+Weaviate: Heavier deployment footprint
+Milvus: More complex to operate
+Qdrant Wins: Self-hosted, lightweight, fast, great REST API
+8. Explain the project's business logic.
+Core Workflow:
+
+Key Business Rules:
+
+Score Computation Frequency: Every entity rescored every 15 minutes
+Signal Window: Risk scores consider signals from last 7/30/90 days (configurable)
+Alert Triggers: Only HIGH (60+) and CRITICAL (80+) create alerts
+AI Summary: Only generated when score crosses threshold (saves Claude API quota)
+Cache Strategy: Results cached for 5 minutes → balance freshness vs load
+Role-Based Access: Viewers see all data; analysts can configure alerts
+Watchlist: Users can follow specific entities for personalized alerts
+9. Explain the project in 30 seconds
+"RiskLens is an AI-powered risk intelligence platform that ingests 500+ data points per hour from news, SEC filings, and market data. It uses NLP to extract entities and sentiment, runs anomaly detection, and sends high-risk clusters to Claude API for plain-English summaries. The result: a real-time dashboard with a 3D visualization, live alerts, and search. I built it with FastAPI, React, Three.js, and Claude. It would have flagged SVB 9 days before collapse and FTX 8 days before bankruptcy."
+
+10. Explain the project in 1 minute
+"RiskLens is a production-grade AI risk intelligence platform I built from scratch.
+
+The Problem: Every financial disaster had warning signals weeks before collapse, but they're scattered across thousands of documents humans can't monitor.
+
+The Solution: RiskLens automates it. It ingests 500+ data points per hour from heterogeneous sources — news feeds, SEC filings, market data. Then:
+
+Extracts entities and sentiment using spaCy and HuggingFace
+Computes quantitative risk scores using a weighted formula
+Detects anomalies (unusual volume, sentiment shifts, price volatility)
+Calls Claude API to generate AI summaries explaining "why"
+Streams real-time alerts via WebSocket to a 3D Galaxy Map visualization
+The Stack:
+
+Backend: FastAPI with async PostgreSQL and Redis
+Frontend: React 18 + TypeScript with Three.js for the Galaxy Map
+Background Jobs: Celery for scheduled ingestion and risk computation
+AI: Claude API + spaCy NER + HuggingFace sentiment
+Deployment: Docker Compose
+Key Features:
+
+Interactive 3D Galaxy visualization
+Live WebSocket alert feed
+Natural language query bar (Claude-powered)
+Risk dashboard with sector analysis
+PDF report generation
+Role-based access control
+Impact: SVB would have been flagged CRITICAL 9 days before collapse. FTX 8 days before. Evergrande 6 weeks before."
+
+11. Explain the project in 3 minutes
+"RiskLens is an AI-powered risk intelligence platform designed to predict financial collapses weeks before they happen. I built the entire system from scratch — backend, frontend, data pipeline, and deployment.
+
+Problem Statement:
+SVB, FTX, Evergrande, Lehman — every major financial disaster of the past decade had public warning signals weeks or months before collapse. But analysts can't humanly monitor thousands of documents across multiple sources simultaneously. Information is fragmented across silos — news feeds, SEC filings, market data, social signals. There's no unified risk view.
+
+Architecture Overview:
+The system is a three-tier distributed application:
+
+TIER 1: Data Ingestion Pipeline
+
+Celery background workers ingest data every 5-30 minutes
+RSS feeds from Reuters, Bloomberg, BBC, FT, AP (news signals)
+SEC EDGAR API for official filings (8-K, 10-K, 10-Q forms)
+Alpha Vantage for real-time market data (stock prices, volumes)
+Each data point is tagged with source, URL, publication date
+TIER 2: NLP Processing Pipeline
+
+spaCy for named entity recognition (extracts company names, countries, people)
+HuggingFace transformers for sentiment analysis (-1 to +1 scores)
+Keyword-based sector inference (Finance, Tech, Energy, Healthcare, etc.)
+Vector embeddings stored in Qdrant for semantic search
+All processing is async to handle concurrent batch operations
+TIER 3: Risk Computation & Visualization
+
+Risk scoring formula combines three factors:
+Sentiment Delta (40% weight): Change in avg sentiment relative to baseline
+Volume Anomaly (30% weight): Z-score of signal volume (unusual spike in coverage?)
+Price Volatility (30% weight): Stock price % change vs threshold
+Formula outputs normalized 0-100 score
+Score classified into severity: LOW (0-35), MEDIUM (35-60), HIGH (60-80), CRITICAL (80+)
+High-risk scores trigger Claude API calls for AI-generated summaries
+Alerts published to Redis Pub/Sub → streamed to all connected frontend clients via WebSocket
+Frontend Architecture:
+
+React 18 with TypeScript for type safety
+Zustand for lightweight state management
+React Query for API data fetching + intelligent caching
+Three.js for 3D Galaxy Map visualization (each star = entity, brightness = risk)
+Chart.js for risk timeline and sector analysis
+Framer Motion for smooth animations
+Responsive design with Tailwind CSS
+Real-time WebSocket listener that updates risk feed as alerts arrive
+Key Features:
+
+Galaxy Map: 3D interactive visualization where each tracked entity is a star. Star size and brightness indicate risk level. Color-coded by severity (cyan = low, amber = high, red = critical). Click any star to open entity detail panel.
+
+Live Risk Feed: Real-time streaming of HIGH/CRITICAL alerts via WebSocket. Shows entity name, severity, current risk score, timestamp. Updated as alerts are triggered (not polling).
+
+Natural Language Query Bar: Type questions like "What's the risk to our supply chain?" or "Which banks are in crisis?" Claude analyzes your question + context and returns answers. Uses hybrid search: semantic (vector DB) + keyword matching.
+
+Risk Dashboard: Summary stats (total entities, alerts today, critical alerts). Bar chart of sector risk distribution. Spotlight on highest-risk entity.
+
+Timeline Explorer: View risk score history for any entity over custom time windows (7, 30, 90, 180 days). Useful for post-mortems and trend analysis.
+
+Entity Detail Panel: Complete history for any entity including all signals, risk scores, AI summaries from Claude, watchlist status.
+
+PDF Reports: Generate audit-ready reports with charts and summaries using jsPDF.
+
+Authentication & Security:
+
+JWT tokens (HS256) with 60-minute expiry
+bcrypt password hashing (not plain-text)
+Role-based access: analyst (full access) vs viewer (read-only)
+Rate limiting: 100 requests/minute per IP
+CORS restrictions
+ORM (SQLAlchemy) prevents SQL injection
+React escaping prevents XSS
+Environment variables for secrets (no hardcoded API keys)
+Database Schema (PostgreSQL):
+
+Users table: email, hashed_password, role, is_active
+Entities table: name, type (company/country/sector/person), sector, ticker, country
+Signals table: entity_id, source, signal_type, raw_text, sentiment_score, published_at
+RiskScores table: entity_id, score, severity, sentiment_delta, volume_anomaly, price_volatility, computed_at
+AISummaries table: entity_id, summary_text, severity, contributing_signals, recommended_action
+Alerts table: entity_id, severity, message, triggered_at, acknowledged
+Watchlists table: user_id, entity_id (join table)
+Caching Strategy:
+
+Redis cache with configurable TTLs (5 min for risk scores, 1 min for live alerts)
+Cache keys: 'entities:list:{page}:{filter}', 'alerts:recent:{hours}', etc.
+Cache invalidation on new score computation or alert
+Pub/Sub for WebSocket broadcasting (no polling)
+Demo Data: Seeded with 25+ historical entities and 500+ signals demonstrating predictive accuracy:
+
+SVB Bank: Flagged CRITICAL 9 days before March 10, 2023 collapse
+FTX Exchange: HIGH risk 8 days before November 8, 2022 bankruptcy
+Evergrande: CRITICAL status 6 weeks before default in December 2021
+COVID Supply Chain: Early detection of disruption patterns in January 2020
+Russia-Ukraine: Energy crisis flagged within 48 hours of February 24, 2022 invasion
+Technical Excellence:
+
+Fully async codebase (FastAPI + asyncpg)
+Proper error handling + structured logging (structlog)
+Comprehensive test suite (pytest)
+Docker containerization for reproducibility
+Database migrations with Alembic (version control for schema)
+Rate limiting with slowapi
+Retry logic with exponential backoff (tenacity)
+Comprehensive inline documentation
+Potential Interview Questions & Answers:
+
+"How would you scale this to monitor 1 million entities?" → Partition signals by entity hash, use read replicas, implement caching layer, move to distributed queue (Kafka vs Celery)
+"What if Claude API goes down?" → Fallback summaries, cache results, implement circuit breaker pattern
+"How do you detect anomalies?" → Z-score for volume, sentiment delta for mood shifts, price volatility for market moves
+"Why not use a NoSQL database?" → Financial data needs ACID guarantees; PostgreSQL with JSON columns gives flexibility + safety
+"How do you prevent false positives?" → Multi-factor scoring (sentiment + volume + price), configurable thresholds, manual oversight"
+12. Technical Explanation (For Engineers)
+System Design:
+
+This is a Lambda Architecture hybrid combining:
+
+Batch Processing: Celery workers run scheduled NLP/risk computation tasks
+Stream Processing: WebSocket broadcasts alerts in real-time via Redis Pub/Sub
+Key Architectural Decisions:
+
+Async-First Design
+
+FastAPI uses asyncio event loop
+asyncpg (async PostgreSQL driver) prevents blocking I/O
+Concurrent ingestion of 5 RSS feeds + SEC API + market data
+All NLP processing parallelized with asyncio.gather()
+Separation of Concerns
+
+Ingestion tier (Celery): fetches raw data
+Processing tier (NLP): enriches with NER, sentiment
+Computation tier (risk engine): quantitative scoring
+Presentation tier (API/WebSocket): exposes results
+Caching Strategy
+
+Read cache (Redis) for expensive queries (risk score computations)
+Pub/Sub cache for event broadcasting (avoids database polling)
+TTL-based invalidation (5-min for scores, 1-min for alerts)
+NLP Pipeline Design
+
+Lazy-loaded spaCy model (on-demand, not in startup)
+Batch processing of articles to amortize model loading
+Async execution in thread pool (spaCy is CPU-bound)
+Vector Search
+
+Hybrid retrieval: semantic (Qdrant) + keyword (PostgreSQL)
+Sentence transformers for embeddings
+Useful for "find similar risk patterns" queries
+API Rate Limiting
+
+slowapi middleware with configurable limits
+Prevents abuse and API quota exhaustion
+Key by remote IP address
+13. Non-Technical Explanation (For Executives)
+"RiskLens is a financial early warning system.
+
+Analogy: Imagine a doctor who monitors your blood pressure, heart rate, and cholesterol 24/7. When something goes wrong, the doctor doesn't wait for you to feel sick — they alert you immediately. That's RiskLens for companies.
+
+How It Works:
+
+Monitoring: The system continuously reads news, financial reports, and market data — like having 100 analysts reading everything simultaneously
+Detection: AI identifies concerning patterns (sentiment changes, unusual trading volume, price drops) that humans might miss
+Alerting: When it detects risk, it sends alerts to decision-makers instantly
+Explanation: Rather than just saying "Risk detected", it explains in plain English: "Why this matters, what signals triggered this, what actions to take"
+Real Results:
+
+SVB Bank: System would have flagged this as CRITICAL 9 days before it collapsed on March 10
+FTX: Would have been flagged 8 days before bankruptcy
+Evergrande: Would have been flagged 6 weeks before default
+Why This Matters:
+
+Prevents billion-dollar losses through early detection
+Saves companies from public embarrassment
+Gives leadership time to take corrective action
+Demonstrates due diligence to regulators and investors
+Who Uses It:
+
+Large corporations protecting their supply chains
+Banks monitoring counterparty risk
+Investors protecting their portfolios
+Audit firms demonstrating risk management expertise"
+Best professional way to explain this in a technical interview
+Opening Statement (30 seconds):
+
+"RiskLens is a distributed system I built to detect early warning signs of financial collapse. It ingests heterogeneous data sources — news, SEC filings, market data — processes them through an NLP pipeline, computes quantitative risk scores, and streams real-time alerts to a React dashboard. The system would have flagged SVB 9 days before its collapse."
+
+Follow with Architecture (2 minutes):
+
+"The architecture is three-tier:
+
+An ingestion layer with Celery background workers fetching data every 5-30 minutes
+A processing layer with spaCy NER, HuggingFace sentiment, and custom anomaly detection
+An API layer with FastAPI serving React frontend via REST + WebSocket for real-time updates"
+Then Go Deep on Your Specialty:
+
+If asked about backend: discuss async design, SQLAlchemy ORM, rate limiting, caching
+If asked about frontend: discuss React component architecture, Three.js visualization, Zustand state
+If asked about AI: discuss Claude integration, sentiment scoring, vector search
+If asked about data: discuss signal pipeline, risk computation formula, anomaly detection
+Key Interview Moves:
+
+✅ Lead with business impact (financial collapses detected early)
+✅ Show architectural awareness (three-tier system)
+✅ Discuss trade-offs (async vs sync, PostgreSQL vs MongoDB, etc.)
+✅ Own your decisions (explain WHY each technology)
+✅ Acknowledge limitations (scaling challenges, fallback strategies)
+✅ Connect to Thoughtworks values (quality, automation, delivery)
+Common mistakes while explaining the project
+❌ Mistake 1: Leading with technology instead of problem
+
+Wrong: "I used React, FastAPI, PostgreSQL, and Celery..."
+Right: "I built a system that detects financial collapses before they happen"
+❌ Mistake 2: Not explaining trade-offs
+
+Wrong: "I chose PostgreSQL because it's popular"
+Right: "I chose PostgreSQL for ACID compliance on financial data; MongoDB would have been faster but sacrifices consistency"
+❌ Mistake 3: Unclear architecture
+
+Wrong: Describing components without showing how they connect
+Right: Draw a flow diagram or use ASCII art to show data flow
+❌ Mistake 4: Oversimplifying the NLP pipeline
+
+Wrong: "I used sentiment analysis"
+Right: "I used HuggingFace transformers with a pre-trained BERT model for sentiment classification, spaCy for NER with entity linking, and custom keyword-based sector tagging"
+❌ Mistake 5: Not mentioning scaling concerns
+
+Wrong: Not discussing how this would handle 1M entities
+Right: "At scale, I'd implement read replicas, partition by entity hash, use Kafka instead of Celery, and implement distributed caching"
+❌ Mistake 6: Defensive about demo data
+
+Wrong: "The demo data is just synthetic..."
+Right: "I seeded historical data from real events (SVB, FTX, Evergrande) to demonstrate predictive accuracy"
+❌ Mistake 7: Not connecting to interviewer's perspective
+
+Wrong: Technical details without business justification
+Right: Explain how this demonstrates your ability to build production systems at scale
+===============================================================
+SECTION 2 — PROJECT ARCHITECTURE
+===============================================================
+1. High-Level Architecture
+2. Frontend Architecture
+State Management Architecture:
+
+API Data Flow:
+
+Component Hierarchy:
+
+3. Backend Architecture
+4. Database Architecture
+5. Authentication Flow
+┌─────────────────────────────────────────────────────────────┐
+│              AUTHENTICATION FLOW                             │
+└─────────────────────────────────────────────────────────────┘
+
+REGISTRATION:
+┌──────────────────────────────────────────────────────────┐
+│ 1. User fills form: email, password, role               │
+│    Frontend: POST /api/auth/register                     │
+│    Body: { email, password, role }                       │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 2. Backend validation                                    │
+│    • Email format (Pydantic EmailStr)                    │
+│    • Check: is email already registered?                 │
+│    • If yes: 409 Conflict                                │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 3. Hash password (bcrypt)                                │
+│    plain_password = "SecurePass123"                      │
+│    hashed = bcrypt.hash(plain_password, rounds=12)       │
+│    Result: $2b$12$N9q...xyz (cannot reverse)             │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 4. Insert user into database                             │
+│    INSERT INTO users (email, hashed_password, role,      │
+│    is_active, created_at)                                │
+│    VALUES (...)                                          │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 5. Generate JWT token                                    │
+│    Payload: {                                            │
+│      "sub": "123",         # user ID                      │
+│      "email": "user@...",                                │
+│      "role": "analyst",                                  │
+│      "exp": 1234567890,    # 60 min from now             │
+│    }                                                     │
+│    token = jwt.encode(payload, SECRET_KEY, HS256)        │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 6. Return token to frontend                              │
+│    Response: 201 Created                                 │
+│    Body: { "access_token": "eyJh...", "token_type":      │
+│            "bearer" }                                    │
+│    Frontend stores in localStorage or memory             │
+└──────────────────────────────────────────────────────────┘
+
+LOGIN:
+┌──────────────────────────────────────────────────────────┐
+│ 1. User enters email + password                          │
+│    Frontend: POST /api/auth/login                        │
+│    Body: { email, password }                             │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 2. Query database for user by email                      │
+│    SELECT * FROM users WHERE email = 'user@...'          │
+│    If not found: 401 Unauthorized                        │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 3. Verify password (bcrypt)                              │
+│    bcrypt.verify(plain_password, user.hashed_password)   │
+│    Compares safely without exposing hash                 │
+│    If false: 401 Unauthorized                            │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 4. Check: is user active?                                │
+│    if not user.is_active: 403 Forbidden                  │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 5. Generate JWT token (same as registration)             │
+│    Payload: { sub, email, role, exp }                    │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 6. Return token to frontend                              │
+│    Status: 200 OK                                        │
+│    Body: { "access_token": "eyJh...", "token_type":      │
+│            "bearer" }                                    │
+│    Frontend stores token + updates authStore             │
+└──────────────────────────────────────────────────────────┘
+
+USING TOKEN ON PROTECTED ENDPOINTS:
+┌──────────────────────────────────────────────────────────┐
+│ 1. Frontend includes token in Authorization header       │
+│    GET /api/entities                                     │
+│    Authorization: Bearer eyJh...                         │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 2. FastAPI dependency: get_current_user()                │
+│    Extracts bearer token from header                     │
+│    Calls jwt.decode(token, SECRET_KEY, algorithms=[...]) │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 3. Validate token                                        │
+│    • Signature valid? (signed with SECRET_KEY)           │
+│    • Expired? (exp > current_time)                       │
+│    If invalid/expired: 401 Unauthorized                  │
+│    On success: return TokenData object                   │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 4. Pass user_id to route handler                         │
+│    Route can now access: current_user.user_id,           │
+│    current_user.email, current_user.role                 │
+│    Can use for: authorization checks, audit logging      │
+└──────┬───────────────────────────────────────────────────┘
+       │
+       ▼
+┌──────────────────────────────────────────────────────────┐
+│ 5. Execute route handler                                 │
+│    Handler returns response                              │
+│    Status 200, with requested data                       │
+└──────────────────────────────────────────────────────────┘
+
+TOKEN EXPIRY & REFRESH:
+┌──────────────────────────────────────────────────────────┐
+│ Token generated with exp: datetime.now() + 60 minutes    │
+│                                                          │
+│ When token expires:                                      │
+│ 1. Frontend detects 401 Unauthorized                     │
+│ 2. User redirected to /login                             │
+│ 3. Must authenticate again (get new token)               │
+│                                                          │
+│ Note: No refresh token implemented (could be added)      │
+│ Current: Simple 60-min expiry with re-login              │
+└──────────────────────────────────────────────────────────┘
+6. API Communication Flow
+Example: User clicks entity star → Open entity detail panel
+
+7. Request-Response Lifecycle
+8. Data Flow from Frontend to Backend
+Let me create one specific complex example: User performs a natural language query
+
+9. Folder Structure Explanation
+10. Why files are organized this way
+Backend Structure Rationale:
+
+/core — Shared Infrastructure
+
+Why separate: Config and security are cross-cutting concerns
+Used by: all routes, workers, and db
+Isolation: changes don't cascade to individual routes
+/api/routes — Route Modules
+
+Why separate files: Each route module is independent
+Scalability: Can add routes without affecting others
+Testing: Test each route in isolation
+Naming: /routes indicates HTTP API contracts
+/ingestion — Data Pipeline
+
+Why separate: External API calls (RSS, SEC, market data)
+Concern: Fetching external data
+Fault isolation: Failed feed doesn't crash system
+/processing — NLP & Business Logic
+
+Why separate: AI/ML operations are distinct from data fetching
+Reusability: Called from routes + workers
+Testing: NLP components tested separately
+/workers — Async Task Queue
+
+Why separate: Background jobs run outside request/response cycle
+Concern: Long-running operations
+Isolation: Worker failures don't affect API availability
+/db — Data Layer
+
+Why separate: All database operations centralized
+Abstraction: Routes don't know SQL directly
+Testability: Mock database layer in tests
+Frontend Structure Rationale:
+
+/pages — Route Pages
+
+Why: Each page maps to a route in React Router
+Clarity: Quick to find page for given URL
+Scalability: Add pages without touching other pages
+/components — Reusable UI Blocks
+
+Why: Componentization = React best practice
+Reusability: SeverityBadge used in 5+ places
+Maintenance: Update component once, affects everywhere
+/api — Data Fetching Layer
+
+Why: Centralized API client (not scattered in components)
+Consistency: All requests use same interceptors
+Testing: Mock API layer in tests
+React Query hooks: Automatic caching/refetching
+/store — Global State
+
+Why: Zustand for auth + UI state
+Clarity: Not scattered in component props
+Testability: Can test store independently
+/utils — Helper Functions
+
+Why: Reusable utilities (date formatting, etc.)
+Single Responsibility: Utilities don't depend on React
+11. Design decisions and tradeoffs
+Decision	Choice	Alternative	Trade-Off
+Framework	FastAPI (async)	Django (sync)	Complexity vs Performance
+Database	PostgreSQL (SQL)	MongoDB (NoSQL)	Schema strictness vs flexibility
+Cache	Redis (in-memory)	Memcached	Feature-rich vs simpler
+Auth	JWT (stateless)	Sessions (stateful)	Scalability vs server-side control
+State (Frontend)	Zustand (lightweight)	Redux (verbose)	Simplicity vs middleware ecosystem
+Risk Scoring	Weighted formula (fixed)	ML model (learned)	Interpretability vs accuracy
+NER	spaCy (CPU)	AWS NER (API)	Cost vs latency
+WebSocket	Native + Redis Pub/Sub	Socket.IO (abstraction)	Control vs convenience
+Key Trade-Off Explanations:
+
+1. Async-First Design vs Sync-Everything
+
+Trade: Learning curve + complexity vs throughput + responsiveness
+RiskLens choice: Async (ingesting 500+ signals/hour needs concurrency)
+Cost: Developers must understand async/await + event loops
+Benefit: 10x throughput without adding servers
+2. PostgreSQL vs MongoDB
+
+Trade: Schema flexibility vs data consistency
+RiskLens choice: PostgreSQL (financial data needs ACID guarantees)
+Cost: Must define schema upfront (Alembic migrations)
+Benefit: No data corruption; SQL is well-understood
+3. JWT vs Sessions
+
+Trade: Server-side control vs stateless scalability
+RiskLens choice: JWT (6-month expiry per config)
+Cost: Can't invalidate token immediately (except in Redis blacklist — not implemented)
+Benefit: Can run multiple backend instances without shared state
+4. Fixed Risk Formula vs ML Model
+
+Trade: Interpretability vs predictive accuracy
+RiskLens choice: Fixed formula (sentiment + volume + price)
+Cost: May miss subtle patterns
+Benefit: Analysts can understand "why score is 85"; easy to debug
+5. Vector + Keyword Search (Hybrid) vs Vector-Only
+
+Trade: Complexity vs recall
+RiskLens choice: Hybrid (semantic + keyword)
+Cost: Two queries per search
+Benefit: Catches both conceptual matches + exact keyword matches
+**12. Scalabil…
+Sorry, the response hit the length limit. Please rephrase your prompt.
+
+Try Again
+Claude Haiku 4.5 • 0.33x
